@@ -22,7 +22,6 @@ import {
   MapPin,
   Video,
   RefreshCcw,
-  BadgeCheck,
   ChevronDown,
   PersonStanding,
   Compass,
@@ -48,9 +47,9 @@ const inter = Inter({
 
 const credentials = [
   { icon: Clock, label: '18 лет в психологии' },
-  { icon: BadgeCheck, label: '8 лет практики' },
-  { icon: Sparkles, label: 'Мультимодальный подход' },
-  { icon: Users, label: '11 000+ сессий' },
+  { icon: Sparkles, label: '8 лет практики' },
+  { icon: Users, label: 'Мультимодальный подход' },
+  { icon: Heart, label: '11 000+ сессий' },
   { icon: ShieldCheck, label: 'Официальная практика' },
 ];
 
@@ -148,22 +147,39 @@ const timeSlots = [
   'Подберём вместе',
 ];
 
+/* CSS-«ретушь»: мягкий тёплый цветокор, чтобы любые фото визуально
+   ложились в бежево-розовую палитру сайта. */
+const warmPhotoFilter =
+  '[filter:sepia(10%)_saturate(114%)_brightness(103%)_contrast(102%)]';
+
 /* -------------------------------------------------------------------------- */
 /*                             SMALL UI HELPERS                             */
 /* -------------------------------------------------------------------------- */
 
-function WaveDivider({ flip = false, className = '' }: { flip?: boolean; className?: string }) {
+/**
+ * Тонкий орнаментальный разделитель между секциями.
+ * Раньше здесь была залитая SVG-волна фиксированным цветом — на непрерывном
+ * градиенте фона это создавало видимый "шов"/плашку (см. скрин). Заменено на
+ * лёгкую волнистую ЛИНИЮ (stroke, не fill), которая ничего не перекрывает
+ * и поэтому не может выглядеть как чужеродный блок при любом оттенке фона.
+ */
+function SectionDivider({ className = '' }: { className?: string }) {
   return (
     <div
       aria-hidden
-      className={`pointer-events-none w-full overflow-hidden leading-none ${flip ? 'rotate-180' : ''} ${className}`}
+      className={`pointer-events-none mx-auto flex w-full max-w-xs items-center justify-center gap-4 ${className}`}
     >
-      <svg viewBox="0 0 1440 100" className="h-12 w-full md:h-20" preserveAspectRatio="none">
+      <span className="h-px flex-1 bg-gradient-to-r from-transparent to-[#C6967B]/35" />
+      <svg width="44" height="16" viewBox="0 0 44 16" className="text-[#C6967B]/50">
         <path
-          d="M0,40 C240,100 480,0 720,40 C960,80 1200,20 1440,50 L1440,100 L0,100 Z"
-          fill="currentColor"
+          d="M0 8 C 6 1, 12 15, 22 8 S 38 1, 44 8"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
         />
       </svg>
+      <span className="h-px flex-1 bg-gradient-to-l from-transparent to-[#C6967B]/35" />
     </div>
   );
 }
@@ -192,6 +208,34 @@ function GlassCard({
       className={`rounded-3xl border border-white/40 bg-white/60 shadow-sm backdrop-blur-md ${className}`}
     >
       {children}
+    </div>
+  );
+}
+
+/**
+ * Организованная фото-рамка с органичными скруглёнными углами,
+ * мягким свечением по краю и лёгким тёплым цветокором изображения.
+ */
+function PortraitFrame({
+  src,
+  alt,
+  roundedClass,
+  glowClass,
+}: {
+  src: string;
+  alt: string;
+  roundedClass: string;
+  glowClass: string;
+}) {
+  return (
+    <div className="relative mx-auto aspect-[4/5] w-full max-w-md">
+      <div className={`absolute -inset-3 rounded-[3rem] blur-2xl ${glowClass}`} />
+      <div
+        className={`relative h-full w-full overflow-hidden border border-white/50 shadow-xl ${roundedClass}`}
+      >
+        <img src={src} alt={alt} className={`h-full w-full object-cover ${warmPhotoFilter}`} />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#4A3E3D]/10 via-transparent to-[#C6967B]/10" />
+      </div>
     </div>
   );
 }
@@ -303,25 +347,19 @@ export default function Home() {
             </button>
           </div>
 
-          {/* Right column — portrait */}
+          {/* Right column — portrait (Фото 1: белая блузка, бежевый фон) */}
           <div className="relative z-10 order-1 lg:order-2">
-            <div className="relative mx-auto aspect-[4/5] w-full max-w-md">
-              <div className="absolute -inset-3 rounded-[3rem] bg-gradient-to-br from-[#EAD9CC]/60 to-[#C6967B]/30 blur-2xl" />
-              <div className="relative h-full w-full overflow-hidden rounded-[2.5rem] rounded-tr-[6rem] rounded-bl-[6rem] border border-white/50 shadow-xl">
-                {/* Замените src на реальное фото психолога, например /images/hero-portrait.jpg */}
-                <img
-                  src="/images/hero-portrait.jpg"
-                  alt="Евгения Шарыгина — психолог, психотерапевт"
-                  className="h-full w-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#4A3E3D]/10 via-transparent to-transparent" />
-              </div>
-            </div>
+            <PortraitFrame
+              src="/images/portrait-hero.jpg"
+              alt="Евгения Шарыгина — психолог, психотерапевт"
+              roundedClass="rounded-[2.5rem] rounded-tr-[6rem] rounded-bl-[6rem]"
+              glowClass="bg-gradient-to-br from-[#EAD9CC]/60 to-[#C6967B]/30"
+            />
           </div>
         </div>
-
-        <WaveDivider className="mt-16 text-[#FAF5F2]" />
       </section>
+
+      <SectionDivider className="mb-6" />
 
       {/* ---------------------------------------------------------------- */}
       {/* ABOUT & APPROACH                                                */}
@@ -330,19 +368,14 @@ export default function Home() {
         <Blob className="right-[5%] top-[10%] h-72 w-72 bg-[#C6967B]/15" />
 
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-2">
-          {/* Portrait */}
+          {/* Portrait (Фото 2: розовая блузка с птичками, диван на фоне) */}
           <div className="relative order-1">
-            <div className="relative mx-auto aspect-[4/5] w-full max-w-md">
-              <div className="absolute -inset-3 rounded-[3rem] bg-gradient-to-tr from-[#C6967B]/25 to-[#EAD9CC]/50 blur-2xl" />
-              <div className="relative h-full w-full overflow-hidden rounded-[2.5rem] rounded-tl-[6rem] rounded-br-[6rem] border border-white/50 shadow-xl">
-                {/* Замените src на второе фото психолога, например /images/about-portrait.jpg */}
-                <img
-                  src="/images/about-portrait.jpg"
-                  alt="Евгения Шарыгина в кабинете"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </div>
+            <PortraitFrame
+              src="/images/portrait-about.jpg"
+              alt="Евгения Шарыгина в кабинете"
+              roundedClass="rounded-[2.5rem] rounded-tl-[6rem] rounded-br-[6rem]"
+              glowClass="bg-gradient-to-tr from-[#C6967B]/25 to-[#EAD9CC]/50"
+            />
           </div>
 
           {/* Text */}
@@ -373,8 +406,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-        <WaveDivider flip className="mt-16 text-white/50" />
       </section>
 
       {/* ---------------------------------------------------------------- */}
@@ -457,9 +488,9 @@ export default function Home() {
             </GlassCard>
           ))}
         </div>
-
-        <WaveDivider className="mt-16 text-white/60" />
       </section>
+
+      <SectionDivider className="mb-6" />
 
       {/* ---------------------------------------------------------------- */}
       {/* RULES & SETTING                                                 */}
@@ -475,7 +506,35 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="mx-auto mt-12 grid max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Банер доверия (Фото 3: за ноутбуком, дипломы на стене) */}
+        <div className="mx-auto mt-10 max-w-5xl">
+          <GlassCard className="grid grid-cols-1 gap-6 overflow-hidden p-6 md:grid-cols-[1fr_1.3fr] md:items-center md:gap-8 md:p-8">
+            <div className="relative mx-auto aspect-[4/5] w-full max-w-xs overflow-hidden rounded-[2rem] rounded-tr-[4rem] border border-white/50 shadow-md">
+              <img
+                src="/images/portrait-office.jpg"
+                alt="Евгения Шарыгина в кабинете за работой, на стене — дипломы и сертификаты"
+                className={`h-full w-full object-cover ${warmPhotoFilter}`}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#4A3E3D]/15 via-transparent to-transparent" />
+            </div>
+            <div className="flex flex-col justify-center">
+              <span className="inline-flex w-fit items-center gap-2 rounded-full bg-[#C6967B]/15 px-4 py-1.5 text-xs font-medium text-[#9C7259]">
+                <ShieldCheck className="h-3.5 w-3.5" strokeWidth={1.75} />
+                Официальная практика
+              </span>
+              <h3 className={`${playfair.className} mt-4 text-2xl font-semibold text-[#4A3E3D]`}>
+                Кабинет, документы, системность
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-[#6B5B58] md:text-base">
+                Работаю официально: профильные дипломы, регулярная супервизия и повышение
+                квалификации. Встречи проходят очно в кабинете или онлайн — но всегда в рамках
+                чёткого терапевтического контракта.
+              </p>
+            </div>
+          </GlassCard>
+        </div>
+
+        <div className="mx-auto mt-10 grid max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {rules.map(({ icon: Icon, title, text }) => (
             <GlassCard key={title} className="p-7">
               <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#4A3E3D]/8">
@@ -515,9 +574,9 @@ export default function Home() {
             </div>
           ))}
         </div>
-
-        <WaveDivider flip className="mt-16 text-white/50" />
       </section>
+
+      <SectionDivider className="mb-6" />
 
       {/* ---------------------------------------------------------------- */}
       {/* BOOKING FORM                                                    */}
