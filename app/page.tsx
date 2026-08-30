@@ -147,21 +147,14 @@ const timeSlots = [
   'Подберём вместе',
 ];
 
-/* CSS-«ретушь»: мягкий тёплый цветокор, чтобы любые фото визуально
-   ложились в бежево-розовую палитру сайта. */
-const warmPhotoFilter =
-  '[filter:sepia(10%)_saturate(114%)_brightness(103%)_contrast(102%)]';
-
 /* -------------------------------------------------------------------------- */
 /*                             SMALL UI HELPERS                             */
 /* -------------------------------------------------------------------------- */
 
 /**
- * Тонкий орнаментальный разделитель между секциями.
- * Раньше здесь была залитая SVG-волна фиксированным цветом — на непрерывном
- * градиенте фона это создавало видимый "шов"/плашку (см. скрин). Заменено на
- * лёгкую волнистую ЛИНИЮ (stroke, не fill), которая ничего не перекрывает
- * и поэтому не может выглядеть как чужеродный блок при любом оттенке фона.
+ * Тонкий орнаментальный разделитель между секциями — волнистая линия
+ * (stroke, не fill), которая ничего не перекрывает и поэтому не может
+ * создать цветовой "шов" на непрерывном градиенте фона.
  */
 function SectionDivider({ className = '' }: { className?: string }) {
   return (
@@ -213,8 +206,74 @@ function GlassCard({
 }
 
 /**
- * Организованная фото-рамка с органичными скруглёнными углами,
- * мягким свечением по краю и лёгким тёплым цветокором изображения.
+ * Тонированное изображение, органично вписанное в тёплую бежево-розовую
+ * палитру сайта.
+ *
+ * Техника (нон-деструктивная, только CSS):
+ * 1. Лёгкий тёплый цветокор (`sepia` + `saturate` + `contrast` + `brightness`) —
+ *    фото остаётся живым и естественным, просто теплее по тону.
+ * 2. Радиальная виньетка цвета фона (#EFE3DD), прозрачная в центре и плотная
+ *    по краям — она "растворяет" края фотографии в фоне страницы, но не
+ *    трогает лицо и центральную композицию, поэтому изображение не выглядит
+ *    угрюмым или обесцвеченным.
+ * 3. Тонкий multiply-слой по краям для дополнительной плавности перехода.
+ * 4. Едва заметный градиент сверху-вниз для объёма и глубины.
+ * 5. Мягкая внутренняя тень и полупрозрачная белая рамка сохраняют
+ *    стеклянную (glassmorphic) эстетику карточек сайта.
+ */
+function ThemedImage({
+  src,
+  alt,
+  roundedClass = 'rounded-3xl',
+  className = '',
+  vignetteOpacity = 'opacity-90', // Сила виньетки: opacity-70, opacity-90, opacity-100
+  vignetteCoverage = 'transparent_30%', // Чем меньше %, тем больше бежевого по краям (напр. transparent_20%)
+}: {
+  src: string;
+  alt: string;
+  roundedClass?: string;
+  className?: string;
+  vignetteOpacity?: string;
+  vignetteCoverage?: string;
+}) {
+  return (
+    <div
+      className={`relative overflow-hidden border border-white/60 shadow-[0_8px_32px_rgba(74,62,61,0.06),inset_0_1px_2px_rgba(255,255,255,0.8)] ${roundedClass} ${className}`}
+    >
+      {/* 1. Картинка: делаем чуть теплее и контрастнее */}
+      <img
+        src={src}
+        alt={alt}
+        className="h-full w-full object-cover sepia-[0.18] saturate-[1.15] contrast-[1.05] brightness-[0.98]"
+      />
+
+      {/* 2. Плотная виньетка под цвет фона (#EFE3DD) */}
+      <div
+        aria-hidden
+        className={`pointer-events-none absolute inset-0 ${vignetteOpacity}`}
+        style={{
+          background: `radial-gradient(circle at center, transparent 25%, #EFE3DD 85%)`,
+        }}
+      />
+
+      {/* 3. Дополнительное наложение цвета по самым краям для слияния */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[#EFE3DD]/20 mix-blend-multiply"
+      />
+
+      {/* 4. Легкий теневой градиент для объема */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#4A3E3D]/20 via-transparent to-transparent"
+      />
+    </div>
+  );
+}
+
+/**
+ * Организованная фото-рамка с органичными скруглёнными углами и мягким
+ * свечением по краю — используется для крупных портретов (Hero, About).
  */
 function PortraitFrame({
   src,
@@ -230,12 +289,7 @@ function PortraitFrame({
   return (
     <div className="relative mx-auto aspect-[4/5] w-full max-w-md">
       <div className={`absolute -inset-3 rounded-[3rem] blur-2xl ${glowClass}`} />
-      <div
-        className={`relative h-full w-full overflow-hidden border border-white/50 shadow-xl ${roundedClass}`}
-      >
-        <img src={src} alt={alt} className={`h-full w-full object-cover ${warmPhotoFilter}`} />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#4A3E3D]/10 via-transparent to-[#C6967B]/10" />
-      </div>
+      <ThemedImage src={src} alt={alt} roundedClass={roundedClass} className="h-full w-full" />
     </div>
   );
 }
@@ -347,7 +401,7 @@ export default function Home() {
             </button>
           </div>
 
-          {/* Right column — portrait (Фото 1: белая блузка, бежевый фон) */}
+          {/* Right column — portrait */}
           <div className="relative z-10 order-1 lg:order-2">
             <PortraitFrame
               src="/images/portrait-hero.jpg"
@@ -368,7 +422,7 @@ export default function Home() {
         <Blob className="right-[5%] top-[10%] h-72 w-72 bg-[#C6967B]/15" />
 
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-2">
-          {/* Portrait (Фото 2: розовая блузка с птичками, диван на фоне) */}
+          {/* Portrait */}
           <div className="relative order-1">
             <PortraitFrame
               src="/images/portrait-about.jpg"
@@ -506,17 +560,15 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Банер доверия (Фото 3: за ноутбуком, дипломы на стене) */}
+        {/* Банер доверия (кабинет / атмосфера практики) */}
         <div className="mx-auto mt-10 max-w-5xl">
           <GlassCard className="grid grid-cols-1 gap-6 overflow-hidden p-6 md:grid-cols-[1fr_1.3fr] md:items-center md:gap-8 md:p-8">
-            <div className="relative mx-auto aspect-[4/5] w-full max-w-xs overflow-hidden rounded-[2rem] rounded-tr-[4rem] border border-white/50 shadow-md">
-              <img
-                src="/images/portrait-office.jpg"
-                alt="Евгения Шарыгина в кабинете за работой, на стене — дипломы и сертификаты"
-                className={`h-full w-full object-cover ${warmPhotoFilter}`}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#4A3E3D]/15 via-transparent to-transparent" />
-            </div>
+            <ThemedImage
+              src="/images/portrait-office.jpg"
+              alt="Евгения Шарыгина в кабинете за работой, на стене — дипломы и сертификаты"
+              roundedClass="rounded-[2rem] rounded-tr-[4rem]"
+              className="mx-auto aspect-[4/5] w-full max-w-xs"
+            />
             <div className="flex flex-col justify-center">
               <span className="inline-flex w-fit items-center gap-2 rounded-full bg-[#C6967B]/15 px-4 py-1.5 text-xs font-medium text-[#9C7259]">
                 <ShieldCheck className="h-3.5 w-3.5" strokeWidth={1.75} />
