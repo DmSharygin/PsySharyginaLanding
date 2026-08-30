@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Playfair_Display, Inter } from 'next/font/google';
 import {
   Sun,
@@ -42,15 +42,36 @@ const inter = Inter({
 });
 
 /* -------------------------------------------------------------------------- */
+/*                                  THEME                                    */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Основной цвет действия (CTA, аватар, акценты бренда) — приглушённый,
+ * пыльный шалфейно-зелёный оттенок (по скриншоту-референсу), а не насыщенный
+ * "лесной" зелёный, использованный ранее.
+ */
+const GREEN = '#6F8570';
+const GREEN_DARK = '#5B6F5D';
+
+const THEME_BG = '#F6ECDA';
+
+/* -------------------------------------------------------------------------- */
 /*                                   DATA                                    */
 /* -------------------------------------------------------------------------- */
 
-const credentials = [
-  { icon: Clock, label: '18 лет в психологии' },
-  { icon: Sparkles, label: '8 лет практики' },
-  { icon: Users, label: 'Мультимодальный подход' },
-  { icon: Heart, label: '11 000+ сессий' },
-  { icon: ShieldCheck, label: 'Официальная практика' },
+const navLinks = [
+  { href: '#about', label: 'Обо мне' },
+  { href: '#work', label: 'Направления' },
+  { href: '#rules', label: 'Принципы' },
+  { href: '#reviews', label: 'Отзывы' },
+  { href: '#booking', label: 'Контакты' },
+];
+
+/** Три ключевые метрики hero — отдельные карточки с иконкой. */
+const heroStats = [
+  { icon: Clock, value: '11 000+', label: 'проведённых сессий' },
+  { icon: Calendar, value: '8+ лет', label: 'частной практики' },
+  { icon: Users, value: 'Мультимодальный', label: 'подход' },
 ];
 
 const forMePoints = [
@@ -206,60 +227,48 @@ function GlassCard({
 }
 
 /**
- * Тонированное изображение, органично вписанное в тёплую бежево-розовую
- * палитру сайта.
+ * Тонированное изображение, органично вписанное в тёплую кремовую палитру
+ * сайта.
  *
- * Техника (нон-деструктивная, только CSS):
- * 1. Лёгкий тёплый цветокор (`sepia` + `saturate` + `contrast` + `brightness`) —
- *    фото остаётся живым и естественным, просто теплее по тону.
- * 2. Радиальная виньетка цвета фона (#EFE3DD), прозрачная в центре и плотная
- *    по краям — она "растворяет" края фотографии в фоне страницы, но не
- *    трогает лицо и центральную композицию, поэтому изображение не выглядит
- *    угрюмым или обесцвеченным.
- * 3. Тонкий multiply-слой по краям для дополнительной плавности перехода.
- * 4. Едва заметный градиент сверху-вниз для объёма и глубины.
- * 5. Мягкая внутренняя тень и полупрозрачная белая рамка сохраняют
- *    стеклянную (glassmorphic) эстетику карточек сайта.
+ * Пути к файлам: все фото лежат в `public/images/` и подключаются строго
+ * с префиксом `/images/...` (например `/images/portrait-hero.jpg`).
  */
 function ThemedImage({
   src,
   alt,
   roundedClass = 'rounded-3xl',
   className = '',
-  vignetteOpacity = 'opacity-90', // Сила виньетки: opacity-70, opacity-90, opacity-100
-  vignetteCoverage = 'transparent_30%', // Чем меньше %, тем больше бежевого по краям (напр. transparent_20%)
+  filterClass = 'sepia-[0.18] saturate-[1.15] contrast-[1.05] brightness-[0.98]',
+  vignetteOpacity = 'opacity-90',
 }: {
   src: string;
   alt: string;
   roundedClass?: string;
   className?: string;
+  filterClass?: string;
   vignetteOpacity?: string;
-  vignetteCoverage?: string;
 }) {
   return (
     <div
-      className={`relative overflow-hidden border border-white/60 shadow-[0_8px_32px_rgba(74,62,61,0.06),inset_0_1px_2px_rgba(255,255,255,0.8)] ${roundedClass} ${className}`}
+      className={`relative w-full overflow-hidden border border-white/60 shadow-[0_8px_32px_rgba(74,62,61,0.06),inset_0_1px_2px_rgba(255,255,255,0.8)] ${roundedClass} ${className}`}
     >
-      {/* 1. Картинка: делаем чуть теплее и контрастнее */}
-      <img
-        src={src}
-        alt={alt}
-        className="h-full w-full object-cover sepia-[0.18] saturate-[1.15] contrast-[1.05] brightness-[0.98]"
-      />
+      {/* 1. Картинка с цветокором */}
+      <img src={src} alt={alt} className={`h-full w-full object-cover ${filterClass}`} />
 
-      {/* 2. Плотная виньетка под цвет фона (#EFE3DD) */}
+      {/* 2. Плотная виньетка под цвет фона */}
       <div
         aria-hidden
         className={`pointer-events-none absolute inset-0 ${vignetteOpacity}`}
         style={{
-          background: `radial-gradient(circle at center, transparent 25%, #EFE3DD 85%)`,
+          background: `radial-gradient(circle at center, transparent 25%, ${THEME_BG} 85%)`,
         }}
       />
 
       {/* 3. Дополнительное наложение цвета по самым краям для слияния */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[#EFE3DD]/20 mix-blend-multiply"
+        className="pointer-events-none absolute inset-0 mix-blend-multiply"
+        style={{ backgroundColor: `${THEME_BG}33` }}
       />
 
       {/* 4. Легкий теневой градиент для объема */}
@@ -272,8 +281,9 @@ function ThemedImage({
 }
 
 /**
- * Организованная фото-рамка с органичными скруглёнными углами и мягким
- * свечением по краю — используется для крупных портретов (Hero, About).
+ * Рамка-обёртка для крупного портрета в секции "Обо мне".
+ * `min-w-0` + `overflow-hidden` защищают от "выезда" содержимого за границы
+ * grid-колонки (у ячеек Grid по умолчанию `min-width: auto`).
  */
 function PortraitFrame({
   src,
@@ -287,9 +297,9 @@ function PortraitFrame({
   glowClass: string;
 }) {
   return (
-    <div className="relative mx-auto aspect-[4/5] w-full max-w-md">
+    <div className="relative mx-auto aspect-[4/5] w-full max-w-md min-w-0 overflow-hidden">
       <div className={`absolute -inset-3 rounded-[3rem] blur-2xl ${glowClass}`} />
-      <ThemedImage src={src} alt={alt} roundedClass={roundedClass} className="h-full w-full" />
+      <ThemedImage src={src} alt={alt} roundedClass={roundedClass} className="h-full" />
     </div>
   );
 }
@@ -306,6 +316,21 @@ export default function Home() {
     topic: '',
   });
   const [submitted, setSubmitted] = useState(false);
+
+  /**
+   * Header: фиксированный (не sticky) и всегда виден при прокрутке.
+   * `scrolled` включает более плотный "liquid glass" (сильнее блюр,
+   * насыщенность и заметная кромка) после начала скролла — на самом верху
+   * страницы стекло почти прозрачное, при скролле "оживает" и уплотняется.
+   */
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -325,90 +350,178 @@ export default function Home() {
     document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' });
   }
 
+  function scrollToWork() {
+    document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
+  }
+
   function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   return (
     <div
-      className={`${inter.variable} ${playfair.variable} min-h-screen bg-gradient-to-b from-[#F5EBE6] via-[#EFE3DD] to-[#FAF5F2] font-sans text-[#4A3E3D] antialiased`}
+      className={`${inter.variable} ${playfair.variable} min-h-screen overflow-x-hidden bg-gradient-to-b from-[#FAF1E2] via-[#F5EAD6] to-[#FBF6EC] font-sans text-[#4A3E3D] antialiased`}
     >
       {/* ---------------------------------------------------------------- */}
-      {/* HEADER                                                          */}
+      {/* HEADER — fixed, liquid glass                                    */}
       {/* ---------------------------------------------------------------- */}
-      <header className="sticky top-0 z-50 border-b border-white/30 bg-[#FAF5F2]/70 backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-10">
-          <a href="#" className={`${playfair.className} text-lg font-semibold tracking-wide text-[#4A3E3D] md:text-xl`}>
-            Евгения Шарыгина
+      <header
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+          scrolled
+            ? 'bg-white/35 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_8px_32px_rgba(74,62,61,0.10)]'
+            : 'bg-white/15 backdrop-blur-xl backdrop-saturate-150 shadow-none'
+        }`}
+        style={{
+          borderBottom: '1px solid rgba(255,255,255,0.45)',
+          boxShadow: scrolled
+            ? 'inset 0 1px 1px rgba(255,255,255,0.6), 0 8px 32px rgba(74,62,61,0.10)'
+            : 'inset 0 1px 1px rgba(255,255,255,0.4)',
+        }}
+      >
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3 md:px-10">
+          {/* Brand: avatar + name/subtitle */}
+          <a href="#" className="flex min-w-0 items-center gap-3">
+            <span
+              className={`${playfair.className} flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full text-sm font-semibold text-white shadow-sm`}
+              style={{ background: `linear-gradient(135deg, ${GREEN}, ${GREEN_DARK})` }}
+            >
+              ЕШ
+            </span>
+            <span className="flex min-w-0 flex-col leading-tight">
+              <span className={`${playfair.className} truncate text-base font-semibold text-[#4A3E3D] md:text-lg`}>
+                Евгения Шарыгина
+              </span>
+              <span className="truncate text-xs text-[#8C7A76]">Психолог-консультант</span>
+            </span>
           </a>
-          <nav className="hidden items-center gap-8 text-sm text-[#6B5B58] md:flex">
-            <a href="#about" className="transition-colors hover:text-[#4A3E3D]">Обо мне</a>
-            <a href="#work" className="transition-colors hover:text-[#4A3E3D]">Запросы</a>
-            <a href="#rules" className="transition-colors hover:text-[#4A3E3D]">Формат</a>
-            <a href="#reviews" className="transition-colors hover:text-[#4A3E3D]">Отзывы</a>
+
+          {/* Nav */}
+          <nav className="hidden items-center gap-7 text-sm text-[#6B5B58] lg:flex">
+            {navLinks.map(({ href, label }) => (
+              <a key={href} href={href} className="whitespace-nowrap transition-colors hover:text-[#4A3E3D]">
+                {label}
+              </a>
+            ))}
           </nav>
+
+          {/* Phone + CTA (desktop) */}
+          <div className="hidden items-center gap-5 md:flex">
+            <a
+              href="tel:+79161782822"
+              className="inline-flex items-center gap-2 whitespace-nowrap text-sm text-[#4A3E3D] transition-colors"
+              style={{ '--hover-color': GREEN_DARK } as React.CSSProperties}
+            >
+              <Phone className="h-4 w-4" style={{ color: GREEN }} strokeWidth={1.75} />
+              +7 (916) 178-28-22
+            </a>
+            <button
+              onClick={scrollToBooking}
+              className="whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-colors duration-300"
+              style={{ backgroundColor: GREEN }}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = GREEN_DARK)}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = GREEN)}
+            >
+              Записаться
+            </button>
+          </div>
+
+          {/* CTA (mobile, компактный вариант без телефона и nav) */}
           <button
             onClick={scrollToBooking}
-            className="rounded-full bg-[#C6967B] px-5 py-2.5 text-sm font-medium text-white shadow-md transition-colors duration-300 hover:bg-[#B5856A]"
+            className="flex-shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-300 md:hidden"
+            style={{ backgroundColor: GREEN }}
           >
             Записаться
           </button>
         </div>
       </header>
 
+      {/* Spacer, компенсирующий изъятие fixed-хедера из потока документа */}
+      <div aria-hidden className="h-[72px] md:h-[76px]" />
+
       {/* ---------------------------------------------------------------- */}
       {/* HERO                                                            */}
       {/* ---------------------------------------------------------------- */}
-      <section className="relative overflow-hidden px-6 pt-16 pb-10 md:px-10 md:pt-24 md:pb-16">
-        <Blob className="left-[-10%] top-[10%] h-72 w-72 bg-[#C6967B]/20" />
+      <section className="relative overflow-hidden px-6 pt-12 pb-14 md:px-10 md:pt-16 md:pb-20">
+        <Blob className="left-[-10%] top-[10%] h-72 w-72 bg-[#C6967B]/15" />
         <Blob className="right-[-5%] top-[30%] h-96 w-96 bg-[#EAD9CC]/40" />
 
-        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-10">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-stretch gap-14 lg:grid-cols-2 lg:gap-16">
           {/* Left column */}
-          <div className="relative z-10 order-2 lg:order-1">
-            <SectionEyebrow>Психолог · Психотерапевт</SectionEyebrow>
+          <div className="relative z-10 flex min-w-0 flex-col justify-center">
+            {/* Бейдж формата работы */}
+            <span
+              className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-white/70 bg-white/70 px-4 py-2 text-sm text-[#4A3E3D] shadow-sm backdrop-blur-sm"
+            >
+              <span className="h-2 w-2 flex-shrink-0 rounded-full" style={{ backgroundColor: GREEN }} />
+              Онлайн и очные консультации в Москве
+            </span>
 
             <h1
-              className={`${playfair.className} mt-6 text-4xl font-semibold leading-tight text-[#4A3E3D] sm:text-5xl md:text-[3.4rem] md:leading-[1.15]`}
+              className={`${playfair.className} text-3xl font-semibold leading-tight text-[#4A3E3D] sm:text-4xl md:text-5xl md:leading-[1.15]`}
             >
-              Евгения Шарыгина —<br className="hidden sm:block" /> практикующий психолог,
+              Евгения Шарыгина —<br className="hidden sm:block" /> практикующий психолог и
               психотерапевт
             </h1>
 
             <p className="mt-6 max-w-xl text-base leading-relaxed text-[#6B5B58] md:text-lg">
-              Психотерапия для тех, кто готов к глубине, изменению сценариев и встрече с собой
-              настоящим.
+              Создаю безопасное пространство для глубинной работы, изменения жизненных
+              сценариев и встречи с собой.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              {credentials.map(({ icon: Icon, label }) => (
-                <span
+            {/* Три отдельные карточки с метриками */}
+            <div className="mt-9 flex flex-wrap gap-3">
+              {heroStats.map(({ icon: Icon, value, label }) => (
+                <div
                   key={label}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/70 px-4 py-2 text-xs font-medium text-[#4A3E3D] shadow-sm backdrop-blur-sm md:text-sm"
+                  className="flex min-w-[190px] flex-1 items-center gap-3 rounded-2xl border border-white/60 bg-white/70 px-4 py-3.5 shadow-sm backdrop-blur-sm sm:flex-none"
                 >
-                  <Icon className="h-4 w-4 text-[#C6967B]" strokeWidth={1.75} />
-                  {label}
-                </span>
+                  <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-[#F0E4D3]">
+                    <Icon className="h-5 w-5 text-[#4A3E3D]" strokeWidth={1.75} />
+                  </span>
+                  <span className="flex flex-col leading-tight">
+                    <span className={`${playfair.className} text-base font-semibold text-[#4A3E3D]`}>
+                      {value}
+                    </span>
+                    <span className="text-xs text-[#8C7A76]">{label}</span>
+                  </span>
+                </div>
               ))}
             </div>
 
-            <button
-              onClick={scrollToBooking}
-              className="mt-10 inline-flex items-center gap-2 rounded-full bg-[#C6967B] px-8 py-4 text-sm font-medium text-white shadow-md transition-all duration-300 hover:bg-[#B5856A] hover:shadow-lg md:text-base"
-            >
-              Записаться на первичную консультацию
-              <ArrowRight className="h-4 w-4" strokeWidth={2} />
-            </button>
+            {/* Основной + второстепенный CTA */}
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <button
+                onClick={scrollToBooking}
+                className="inline-flex items-center gap-3 rounded-full px-8 py-4 text-sm font-medium text-white shadow-lg transition-all duration-300 hover:shadow-xl md:text-base"
+                style={{ backgroundColor: GREEN }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = GREEN_DARK)}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = GREEN)}
+              >
+                Записаться на первичную консультацию
+                <ArrowRight className="h-4 w-4" strokeWidth={2} />
+              </button>
+              <button
+                onClick={scrollToWork}
+                className="inline-flex items-center gap-2 rounded-full border border-[#4A3E3D]/25 bg-white/40 px-7 py-4 text-sm font-medium text-[#4A3E3D] transition-colors duration-300 hover:bg-white/70 md:text-base"
+              >
+                Направления работы
+              </button>
+            </div>
           </div>
 
-          {/* Right column — portrait */}
-          <div className="relative z-10 order-1 lg:order-2">
-            <PortraitFrame
-              src="/images/portrait-hero.jpg"
-              alt="Евгения Шарыгина — психолог, психотерапевт"
-              roundedClass="rounded-[2.5rem] rounded-tr-[6rem] rounded-bl-[6rem]"
-              glowClass="bg-gradient-to-br from-[#EAD9CC]/60 to-[#C6967B]/30"
-            />
+          {/* Right column — живое фото в кабинете/интерьере */}
+          <div className="relative z-10 min-w-0">
+            <div className="relative h-full min-h-[380px] w-full lg:min-h-[560px]">
+              <ThemedImage
+                src="/images/portrait-hero.jpg"
+                alt="Евгения Шарыгина — психолог, психотерапевт, в кабинете"
+                roundedClass="rounded-3xl"
+                className="h-full"
+                filterClass="contrast-[1.03] brightness-[1.02] saturate-[1.05]"
+                vignetteOpacity="opacity-30"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -423,7 +536,7 @@ export default function Home() {
 
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-2">
           {/* Portrait */}
-          <div className="relative order-1">
+          <div className="relative order-1 min-w-0">
             <PortraitFrame
               src="/images/portrait-about.jpg"
               alt="Евгения Шарыгина в кабинете"
@@ -433,7 +546,7 @@ export default function Home() {
           </div>
 
           {/* Text */}
-          <div className="order-2">
+          <div className="order-2 min-w-0">
             <SectionEyebrow>Философия работы</SectionEyebrow>
             <h2 className={`${playfair.className} mt-5 text-3xl font-semibold text-[#4A3E3D] sm:text-4xl`}>
               Обо мне и моём подходе
@@ -563,13 +676,15 @@ export default function Home() {
         {/* Банер доверия (кабинет / атмосфера практики) */}
         <div className="mx-auto mt-10 max-w-5xl">
           <GlassCard className="grid grid-cols-1 gap-6 overflow-hidden p-6 md:grid-cols-[1fr_1.3fr] md:items-center md:gap-8 md:p-8">
-            <ThemedImage
-              src="/images/portrait-office.jpg"
-              alt="Евгения Шарыгина в кабинете за работой, на стене — дипломы и сертификаты"
-              roundedClass="rounded-[2rem] rounded-tr-[4rem]"
-              className="mx-auto aspect-[4/5] w-full max-w-xs"
-            />
-            <div className="flex flex-col justify-center">
+            <div className="min-w-0">
+              <ThemedImage
+                src="/images/portrait-office.jpg"
+                alt="Евгения Шарыгина в кабинете за работой, на стене — дипломы и сертификаты"
+                roundedClass="rounded-[2rem] rounded-tr-[4rem]"
+                className="mx-auto aspect-[4/5] max-w-xs"
+              />
+            </div>
+            <div className="flex min-w-0 flex-col justify-center">
               <span className="inline-flex w-fit items-center gap-2 rounded-full bg-[#C6967B]/15 px-4 py-1.5 text-xs font-medium text-[#9C7259]">
                 <ShieldCheck className="h-3.5 w-3.5" strokeWidth={1.75} />
                 Официальная практика
@@ -650,7 +765,7 @@ export default function Home() {
         <GlassCard className="mx-auto mt-10 max-w-3xl p-6 md:p-10">
           {submitted ? (
             <div className="flex flex-col items-center gap-3 py-10 text-center">
-              <CheckCircle2 className="h-12 w-12 text-[#C6967B]" strokeWidth={1.5} />
+              <CheckCircle2 className="h-12 w-12" style={{ color: GREEN }} strokeWidth={1.5} />
               <h3 className={`${playfair.className} text-2xl font-semibold text-[#4A3E3D]`}>
                 Спасибо, заявка отправлена
               </h3>
@@ -729,7 +844,10 @@ export default function Home() {
               <div className="pt-2 text-center">
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 rounded-full bg-[#C6967B] px-10 py-3.5 text-sm font-medium text-white shadow-md transition-all duration-300 hover:bg-[#B5856A] hover:shadow-lg md:text-base"
+                  className="inline-flex items-center gap-2 rounded-full px-10 py-3.5 text-sm font-medium text-white shadow-md transition-all duration-300 hover:shadow-lg md:text-base"
+                  style={{ backgroundColor: GREEN }}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = GREEN_DARK)}
+                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = GREEN)}
                 >
                   Записаться
                   <Send className="h-4 w-4" strokeWidth={2} />
@@ -755,32 +873,35 @@ export default function Home() {
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-6">
             <a
               href="tel:+79161782822"
-              className="inline-flex items-center gap-2 text-sm text-[#4A3E3D] transition-colors hover:text-[#C6967B]"
+              className="inline-flex items-center gap-2 text-sm text-[#4A3E3D] transition-colors"
             >
-              <Phone className="h-4 w-4 text-[#C6967B]" strokeWidth={1.75} />
+              <Phone className="h-4 w-4" style={{ color: GREEN }} strokeWidth={1.75} />
               +7 (916) 178-28-22
             </a>
             <a
               href="https://t.me/sharygina_psy"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm text-[#4A3E3D] transition-colors hover:text-[#C6967B]"
+              className="inline-flex items-center gap-2 text-sm text-[#4A3E3D] transition-colors"
             >
-              <Send className="h-4 w-4 text-[#C6967B]" strokeWidth={1.75} />
+              <Send className="h-4 w-4" style={{ color: GREEN }} strokeWidth={1.75} />
               Telegram
             </a>
             <a
               href="mailto:hello@sharygina.ru"
-              className="inline-flex items-center gap-2 text-sm text-[#4A3E3D] transition-colors hover:text-[#C6967B]"
+              className="inline-flex items-center gap-2 text-sm text-[#4A3E3D] transition-colors"
             >
-              <MapPin className="h-4 w-4 text-[#C6967B]" strokeWidth={1.75} />
+              <MapPin className="h-4 w-4" style={{ color: GREEN }} strokeWidth={1.75} />
               Онлайн / очно, Москва
             </a>
           </div>
 
           <button
             onClick={scrollToTop}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/60 bg-white/70 text-[#4A3E3D] shadow-sm transition-colors hover:bg-[#C6967B] hover:text-white"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/60 bg-white/70 text-[#4A3E3D] shadow-sm transition-colors hover:text-white"
+            style={{ '--hover-bg': GREEN } as React.CSSProperties}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = GREEN)}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '')}
             aria-label="Наверх"
           >
             <ArrowUp className="h-4 w-4" strokeWidth={2} />
