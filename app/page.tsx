@@ -62,8 +62,8 @@ const THEME_BG = '#F6ECDA';
 const navLinks = [
   { href: '#about', label: 'Обо мне' },
   { href: '#work', label: 'Направления' },
-  { href: '#rules', label: 'Принципы' },
-  { href: '#reviews', label: 'Отзывы' },
+  { href: '#rules', label: 'Правила' },
+  { href: '#prices', label: 'Стоимость' },
   { href: '#booking', label: 'Контакты' },
 ];
 
@@ -142,22 +142,26 @@ const rules = [
   },
 ];
 
-const reviews = [
+const pricingCards = [
   {
-    name: 'Анна, 34 года',
-    text: 'После нескольких встреч я наконец начала различать свои чувства и не бояться их. Спасибо за бережность и глубину.',
+    duration: '60 минут',
+    type: 'Индивидуальная',
+    price: '6500 руб',
   },
   {
-    name: 'Дмитрий, 41 год',
-    text: 'Евгения умеет слышать то, что стоит за словами. Работа с ней — это про честность с собой, а не про утешение.',
+    duration: '90 минут',
+    type: 'Индивидуальная',
+    price: '8500 руб',
   },
   {
-    name: 'Игорь, 29 лет',
-    text: 'Впервые в терапии я почувствовал, что меня не «лечат», а видят целиком. Это было точно то, что нужно.',
+    duration: '60 минут',
+    type: 'Парная',
+    price: '7500 руб',
   },
   {
-    name: 'Марина, 37 лет',
-    text: 'Очень профессиональный и деликатный подход. Помогла разобраться в отношениях, которые казались тупиком.',
+    duration: '90 минут',
+    type: 'Парная',
+    price: '9500 руб',
   },
 ];
 
@@ -301,6 +305,37 @@ function PortraitFrame({
       <div className={`absolute -inset-3 rounded-[3rem] blur-2xl ${glowClass}`} />
       <ThemedImage src={src} alt={alt} roundedClass={roundedClass} className="h-full" />
     </div>
+  );
+}
+
+
+
+function PricingCard({
+  duration,
+  type,
+  price,
+}: {
+  duration: string;
+  type: string;
+  price: string;
+}) {
+  return (
+    <GlassCard className="flex flex-col items-center p-8 text-center">
+  {/* Бейдж длительности как на втором скриншоте */}
+  <div className="inline-flex items-center justify-center rounded-full bg-[#4A3E3D]/8 px-4 py-1.5 text-sm font-medium text-[#4A3E3D]">
+    {duration}
+  </div>
+
+  {/* Название услуги */}
+  <h3 className={`${playfair.className} mt-6 text-xl font-medium text-[#4A3E3D]`}>
+    {type}
+  </h3>
+
+  {/* Стоимость (с ровными цифрами без засечек) */}
+  <p className="mt-3 text-4xl font-bold tracking-tight text-[#4A3E3D]">
+    {price}
+  </p>
+</GlassCard>
   );
 }
 
@@ -501,12 +536,6 @@ export default function Home() {
                 Записаться на первичную консультацию
                 <ArrowRight className="h-4 w-4" strokeWidth={2} />
               </button>
-              <button
-                onClick={scrollToWork}
-                className="inline-flex items-center gap-2 rounded-full border border-[#4A3E3D]/25 bg-white/40 px-7 py-4 text-sm font-medium text-[#4A3E3D] transition-colors duration-300 hover:bg-white/70 md:text-base"
-              >
-                Направления работы
-              </button>
             </div>
           </div>
 
@@ -514,7 +543,7 @@ export default function Home() {
           <div className="relative z-10 min-w-0">
             <div className="relative h-full min-h-[380px] w-full lg:min-h-[560px]">
               <ThemedImage
-                src="/images/portrait-hero.jpg"
+                src="/images/portrait-hero2.jpg"
                 alt="Евгения Шарыгина — психолог, психотерапевт, в кабинете"
                 roundedClass="rounded-3xl"
                 className="h-full"
@@ -716,29 +745,23 @@ export default function Home() {
         </div>
       </section>
 
+{/* ---------------------------------------------------------------- */}
+      {/* PRICING                                                          */}
       {/* ---------------------------------------------------------------- */}
-      {/* REVIEWS                                                         */}
-      {/* ---------------------------------------------------------------- */}
-      <section id="reviews" className="relative px-6 py-16 md:px-10 md:py-24">
-        <Blob className="right-[0%] top-[0%] h-72 w-72 bg-[#C6967B]/15" />
-
+      <section id="prices" className="relative px-6 py-16 md:px-10 md:py-24">
         <div className="mx-auto max-w-7xl text-center">
-          <SectionEyebrow>Слова клиентов</SectionEyebrow>
+          <SectionEyebrow>Инвестиция в себя</SectionEyebrow>
           <h2 className={`${playfair.className} mt-5 text-3xl font-semibold text-[#4A3E3D] sm:text-4xl`}>
-            Отзывы
+            Стоимость сессии
           </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-base text-[#6B5B58] md:text-lg">
+            В уютном кабинете или онлайн — формат встречи выбираете вы.
+          </p>
         </div>
 
-        <div className="relative mx-auto mt-12 grid max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2">
-          {reviews.map(({ name, text }) => (
-            <div
-              key={name}
-              className="rounded-2xl border border-white/40 bg-white/50 p-6 shadow-sm backdrop-blur-sm"
-            >
-              <Quote className="h-7 w-7 text-[#C6967B]/60" strokeWidth={1.5} />
-              <p className="mt-4 text-sm leading-relaxed text-[#6B5B58] md:text-base">{text}</p>
-              <p className={`${playfair.className} mt-4 text-sm font-medium text-[#4A3E3D]`}>{name}</p>
-            </div>
+        <div className="relative mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2">
+          {pricingCards.map((card) => (
+            <PricingCard key={`${card.type}-${card.duration}`} {...card} />
           ))}
         </div>
       </section>
