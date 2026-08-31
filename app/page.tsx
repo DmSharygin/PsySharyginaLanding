@@ -617,7 +617,7 @@ export default function Home() {
                 roundedClass="rounded-3xl"
                 className="h-full"
                 filterClass="contrast-[1.03] brightness-[1.02] saturate-[1.05]"
-                vignetteOpacity="opacity-30"
+                vignetteOpacity="opacity-10"
               />
             </div>
           </div>
@@ -635,12 +635,16 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-2">
           {/* Portrait */}
           <div className="relative order-1 min-w-0">
-            <PortraitFrame
-              src="/images/portrait-about.jpg"
-              alt="Евгения Шарыгина в кабинете"
-              roundedClass="rounded-[2.5rem] rounded-tl-[6rem] rounded-br-[6rem]"
-              glowClass="bg-gradient-to-tr from-[#C6967B]/25 to-[#EAD9CC]/50"
-            />
+            <div className="relative h-full min-h-[380px] w-full lg:min-h-[560px]">
+              <ThemedImage
+                src="/images/portrait-about.jpg"
+                alt="Евгения Шарыгина в кабинете"
+                roundedClass="rounded-3xl"
+                className="h-full"
+                filterClass="contrast-[1.03] brightness-[1.02] saturate-[1.05]"
+                vignetteOpacity="opacity-70"
+              />
+            </div>
           </div>
 
           {/* Text */}
@@ -810,6 +814,7 @@ export default function Home() {
                 alt="Евгения Шарыгина в кабинете за работой, на стене — дипломы и сертификаты"
                 roundedClass="rounded-[2rem] rounded-tr-[4rem]"
                 className="mx-auto aspect-[4/5] max-w-xs"
+                vignetteOpacity="opacity-10"
               />
             </div>
             <div className="flex min-w-0 flex-col justify-center">
