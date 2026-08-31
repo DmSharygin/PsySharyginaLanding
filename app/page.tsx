@@ -27,6 +27,8 @@ import {
   Compass,
   AlertCircle,
   ArrowRight,
+  X,
+  GraduationCap,
 } from 'lucide-react';
 
 const playfair = Playfair_Display({
@@ -62,6 +64,7 @@ const THEME_BG = '#F6ECDA';
 const navLinks = [
   { href: '#about', label: 'Обо мне' },
   { href: '#work', label: 'Направления' },
+  { href: '#education', label: 'Образование' },
   { href: '#rules', label: 'Правила' },
   { href: '#prices', label: 'Стоимость' },
   { href: '#booking', label: 'Контакты' },
@@ -172,32 +175,32 @@ const timeSlots = [
   'Подберём вместе',
 ];
 
+const diplomaImages = Array.from({ length: 10 }, (_, i) => {
+  const num = String(i + 1).padStart(2, '0');
+  return {
+    src: `/images/docs/${num}_diplom.jpg`,
+    alt: `Диплом или сертификат ${i + 1}`,
+  };
+});
+
 /* -------------------------------------------------------------------------- */
 /*                             SMALL UI HELPERS                             */
 /* -------------------------------------------------------------------------- */
 
 /**
- * Тонкий орнаментальный разделитель между секциями — волнистая линия
- * (stroke, не fill), которая ничего не перекрывает и поэтому не может
- * создать цветовой "шов" на непрерывном градиенте фона.
+ * Орнаментальный разделитель между секциями — золотистая волнистая линия.
  */
 function SectionDivider({ className = '' }: { className?: string }) {
   return (
     <div
       aria-hidden
-      className={`pointer-events-none mx-auto flex w-full max-w-xs items-center justify-center gap-4 ${className}`}
+      className={`pointer-events-none mx-auto flex w-full max-w-3xl items-center justify-center px-6 py-4 md:max-w-4xl md:py-6 ${className}`}
     >
-      <span className="h-px flex-1 bg-gradient-to-r from-transparent to-[#C6967B]/35" />
-      <svg width="44" height="16" viewBox="0 0 44 16" className="text-[#C6967B]/50">
-        <path
-          d="M0 8 C 6 1, 12 15, 22 8 S 38 1, 44 8"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-        />
-      </svg>
-      <span className="h-px flex-1 bg-gradient-to-l from-transparent to-[#C6967B]/35" />
+      <img
+        src="/images/separators/separator_3.png"
+        alt=""
+        className="h-auto w-full object-contain"
+      />
     </div>
   );
 }
@@ -309,6 +312,72 @@ function PortraitFrame({
 }
 
 
+
+function DiplomaCarousel({ images }: { images: { src: string; alt: string }[] }) {
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!lightboxSrc) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLightboxSrc(null);
+    };
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [lightboxSrc]);
+
+  return (
+    <>
+      <div className="-mx-6 mt-10 px-6 md:-mx-10 md:px-10">
+        <div className="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          {images.map(({ src, alt }) => (
+            <button
+              key={src}
+              type="button"
+              onClick={() => setLightboxSrc(src)}
+              className="group snap-start flex-shrink-0 cursor-pointer overflow-hidden rounded-2xl border border-white/60 bg-white/60 shadow-sm backdrop-blur-md transition-transform duration-300 hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C6967B]"
+            >
+              <img
+                src={src}
+                alt={alt}
+                className="h-52 w-auto max-w-none object-cover transition-transform duration-300 group-hover:scale-[1.02] sm:h-60"
+                draggable={false}
+              />
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {lightboxSrc && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#4A3E3D]/75 p-4 backdrop-blur-sm"
+          onClick={() => setLightboxSrc(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Просмотр документа"
+        >
+          <button
+            type="button"
+            onClick={() => setLightboxSrc(null)}
+            className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/40 bg-white/90 text-[#4A3E3D] shadow-md transition-colors hover:bg-white md:right-8 md:top-8"
+            aria-label="Закрыть"
+          >
+            <X className="h-5 w-5" strokeWidth={2} />
+          </button>
+          <img
+            src={lightboxSrc}
+            alt=""
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-[88vh] max-w-[min(92vw,900px)] rounded-3xl border border-white/40 object-contain shadow-2xl"
+          />
+        </div>
+      )}
+    </>
+  );
+}
 
 function PricingCard({
   duration,
@@ -555,7 +624,7 @@ export default function Home() {
         </div>
       </section>
 
-      <SectionDivider className="mb-6" />
+      <SectionDivider />
 
       {/* ---------------------------------------------------------------- */}
       {/* ABOUT & APPROACH                                                */}
@@ -603,6 +672,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <SectionDivider />
 
       {/* ---------------------------------------------------------------- */}
       {/* SELF-SELECTION GRID                                             */}
@@ -658,6 +729,8 @@ export default function Home() {
         </div>
       </section>
 
+      <SectionDivider />
+
       {/* ---------------------------------------------------------------- */}
       {/* AREAS OF WORK                                                   */}
       {/* ---------------------------------------------------------------- */}
@@ -686,7 +759,33 @@ export default function Home() {
         </div>
       </section>
 
-      <SectionDivider className="mb-6" />
+      <SectionDivider />
+
+      {/* ---------------------------------------------------------------- */}
+      {/* EDUCATION                                                       */}
+      {/* ---------------------------------------------------------------- */}
+      <section id="education" className="relative px-6 py-16 md:px-10 md:py-24">
+        <Blob className="right-[10%] top-[20%] h-64 w-64 bg-[#C6967B]/10" />
+
+        <div className="mx-auto max-w-7xl text-center">
+          <SectionEyebrow>
+            <GraduationCap className="h-3.5 w-3.5" strokeWidth={1.75} />
+            Квалификация
+          </SectionEyebrow>
+          <h2 className={`${playfair.className} mt-5 text-3xl font-semibold text-[#4A3E3D] sm:text-4xl`}>
+            Образование
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-base text-[#6B5B58] md:text-lg">
+            Дипломы и сертификаты
+          </p>
+        </div>
+
+        <div className="mx-auto max-w-7xl">
+          <DiplomaCarousel images={diplomaImages} />
+        </div>
+      </section>
+
+      <SectionDivider />
 
       {/* ---------------------------------------------------------------- */}
       {/* RULES & SETTING                                                 */}
@@ -745,6 +844,8 @@ export default function Home() {
         </div>
       </section>
 
+      <SectionDivider />
+
 {/* ---------------------------------------------------------------- */}
       {/* PRICING                                                          */}
       {/* ---------------------------------------------------------------- */}
@@ -766,7 +867,7 @@ export default function Home() {
         </div>
       </section>
 
-      <SectionDivider className="mb-6" />
+      <SectionDivider />
 
       {/* ---------------------------------------------------------------- */}
       {/* BOOKING FORM                                                    */}
