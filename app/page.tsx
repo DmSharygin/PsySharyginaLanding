@@ -611,7 +611,7 @@ export default function Home() {
           <div className="relative z-10 min-w-0 order-1 lg:order-2">
             <div className="relative h-full w-full min-h-[300px] lg:min-h-[560px] max-h-[60vh] lg:max-h-none">
               <ThemedImage
-                src="/images/portrait-hero2.jpg"
+                src="/images/portrait-hero.jpg"
                 alt="Евгения Шарыгина — психолог, психотерапевт, в кабинете"
                 roundedClass="rounded-3xl"
                 className="h-full w-full object-cover"
@@ -641,7 +641,7 @@ export default function Home() {
                 roundedClass="rounded-3xl"
                 className="h-full"
                 filterClass="contrast-[1.03] brightness-[1.02] saturate-[1.05]"
-                vignetteOpacity="opacity-70"
+                vignetteOpacity="opacity-30"
               />
             </div>
           </div>
