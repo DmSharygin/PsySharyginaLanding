@@ -592,7 +592,7 @@ export default function Home() {
   // Внутри функции компонента:
   const [activeDoc, setActiveDoc] = useState<'privacy' | 'offer' | 'consent' | null>(null)
   const [scrolled, setScrolled] = useState(false);
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
@@ -607,11 +607,32 @@ export default function Home() {
     setForm((prev) => ({ ...prev, [name]: value }));
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // TODO: подключить реальную отправку (API route / CRM / Telegram-бот)
-    console.log('Booking request:', form);
-    setSubmitted(true);
+    if (!agreed || isSubmitting) return;
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        alert('Произошла ошибка при отправке заявки. Попробуйте еще раз.');
+      }
+    } catch (error) {
+      console.error('Booking submission error:', error);
+      alert('Не удалось отправить заявку. Проверьте подключение к интернету.');
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   function scrollToBooking() {
