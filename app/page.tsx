@@ -104,12 +104,12 @@ const workAreas = [
   {
     icon: Sparkles,
     title: 'Автономия и самоценность',
-    text: 'Опора на себя, а не на внешнее одобрение. Право хотеть, отказывать и занимать место в своей жизни.',
+    text: 'Страх быть собой, неуверенность, тревога, низкая самооценка — работа с внутренним критиком и стыдом. Чувство вины за отказы, зависимость от чужой оценки, трудности с принятием решений — возвращение внутренней опоры.',
   },
   {
     icon: PersonStanding,
-    title: 'Тело и проявленность',
-    text: 'Телесно-ориентированная работа: возвращение чувствительности, снятие хронического напряжения, право быть видимым.',
+    title: 'Повторяющиеся сценарии',
+    text: 'Повторяющиеся конфликты в отношениях,эмоциональная зависимость, трудности с границами, повторяющиеся ошибки в карьере — исследование бессознательных паттернов и их трансформация.',
   },
   {
     icon: Compass,
@@ -998,6 +998,106 @@ export default function Home() {
       </section>
 
       {/* ---------------------------------------------------------------- */}
+      {/* CONTACTS SECTION                                                */}
+      {/* ---------------------------------------------------------------- */}
+            <section id="contacts" className="relative px-6 py-16 md:px-10 md:py-24">
+        <div className="mx-auto max-w-4xl text-center">
+          <SectionEyebrow>Свяжитесь со мной</SectionEyebrow>
+          <h2 className={`${playfair.className} mt-5 text-3xl font-semibold text-[#4A3E3D] sm:text-4xl`}>
+            Контакты
+          </h2>
+          <p className="mt-4 text-base text-[#6B5B58] md:text-lg">
+            Буду рада ответить на ваши вопросы
+          </p>
+        </div>
+
+        <GlassCard className="mx-auto mt-10 max-w-5xl p-6 md:p-10">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            
+            {/* Левая колонка (Контакты) */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {/* Адрес */}
+              <a
+                href="https://yandex.ru/maps/?text=Москва, Измайловское шоссе, 71к4Г-Д"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 rounded-2xl border border-white/60 bg-white/50 p-4 transition-all hover:bg-white/80"
+              >
+                <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-[#F0E4D3]">
+                  <MapPin className="h-5 w-5 text-[#4A3E3D]" strokeWidth={1.75} />
+                </span>
+                <div className="flex flex-col">
+                  <span className="text-xs text-[#8C7A76]">Адрес кабинета</span>
+                  <span className="text-sm font-semibold text-[#4A3E3D] leading-tight">
+                    м. Партизанская, <br />Измайловское шоссе, 71к4Г-Д
+                  </span>
+                </div>
+              </a>
+
+              {/* Телефон */}
+              <a
+                href="tel:+79161782822"
+                className="flex items-center gap-4 rounded-2xl border border-white/60 bg-white/50 p-4 transition-all hover:bg-white/80"
+              >
+                <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-[#F0E4D3]">
+                  <Phone className="h-5 w-5 text-[#4A3E3D]" strokeWidth={1.75} />
+                </span>
+                <div className="flex flex-col">
+                  <span className="text-xs text-[#8C7A76]">Телефон</span>
+                  <span className="text-base font-semibold text-[#4A3E3D]">+7 (916) 178-28-22</span>
+                </div>
+              </a>
+
+              {/* Telegram (личный) */}
+              <a
+                href="https://t.me/e_sharygina"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 rounded-2xl border border-white/60 bg-white/50 p-4 transition-all hover:bg-white/80"
+              >
+                <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-[#F0E4D3]">
+                  <Send className="h-5 w-5 text-[#4A3E3D]" strokeWidth={1.75} />
+                </span>
+                <div className="flex flex-col">
+                  <span className="text-xs text-[#8C7A76]">Telegram</span>
+                  <span className="text-base font-semibold text-[#4A3E3D]">Написать в Telegram</span>
+                </div>
+              </a>
+
+              {/* Telegram (канал) */}
+              <a
+                href="https://t.me/PsySharygina"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 rounded-2xl border border-white/60 bg-white/50 p-4 transition-all hover:bg-white/80"
+              >
+                <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-[#F0E4D3]">
+                  <Send className="h-5 w-5 text-[#4A3E3D]" strokeWidth={1.75} />
+                </span>
+                <div className="flex flex-col">
+                  <span className="text-xs text-[#8C7A76]">Telegram-канал</span>
+                  <span className="text-base font-semibold text-[#4A3E3D]">Читать канал</span>
+                </div>
+              </a>
+            </div>
+
+            {/* Правая колонка (Карта) */}
+            <div className="overflow-hidden rounded-3xl border border-white/80 shadow-sm backdrop-blur-sm min-h-[350px]">
+              <iframe
+                src="https://yandex.ru/map-widget/v1/?ll=37.747830%2C55.791338&z=16&pt=37.747830,55.791338,pm2rdm"
+                width="100%"
+                height="100%"
+                frameBorder="0"
+                allowFullScreen={true}
+                className="w-full h-full grayscale-[0.2] contrast-[1.05]"
+                title="Кабинет на карте"
+              />
+            </div>
+          </div>
+        </GlassCard>
+      </section>
+
+      {/* ---------------------------------------------------------------- */}
       {/* FOOTER                                                          */}
       {/* ---------------------------------------------------------------- */}
       <footer className="relative border-t border-white/40 bg-white/40 px-6 py-10 backdrop-blur-sm md:px-10">
@@ -1048,7 +1148,7 @@ export default function Home() {
         </div>
 
         <p className="mx-auto mt-8 max-w-7xl text-center text-xs text-[#9C8C89]">
-          © 2026 Евгения Шарыгина. Все права защищены.
+          © 2026 ИП Евгения Шарыгина. Все права защищены.
         </p>
       </footer>
     </div>
