@@ -1148,7 +1148,7 @@ export default function Home() {
         </div>
 
         <p className="mx-auto mt-8 max-w-7xl text-center text-xs text-[#9C8C89]">
-          © 2026 ИП Евгения Шарыгина. Все права защищены.
+          © 2026 ИП Шарыгина Евгения Александровна. Все права защищены.
         </p>
       </footer>
     </div>
