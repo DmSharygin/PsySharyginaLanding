@@ -73,8 +73,9 @@ const navLinks = [
 /** Три ключевые метрики hero — отдельные карточки с иконкой. */
 const heroStats = [
   { icon: Clock, value: '11 000+', label: 'проведённых сессий' },
-  { icon: Calendar, value: '8+ лет', label: 'частной практики' },
+  { icon: Calendar, value: '12+ лет', label: 'частной практики' },
   { icon: Users, value: 'Мультимодальный', label: 'подход' },
+  { icon: Heart, value: '300+ часов', label: 'личной терапии' }
 ];
 
 const forMePoints = [
@@ -471,8 +472,8 @@ export default function Home() {
       {/* ---------------------------------------------------------------- */}
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled
-            ? 'bg-white/35 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_8px_32px_rgba(74,62,61,0.10)]'
-            : 'bg-white/15 backdrop-blur-xl backdrop-saturate-150 shadow-none'
+          ? 'bg-white/35 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_8px_32px_rgba(74,62,61,0.10)]'
+          : 'bg-white/15 backdrop-blur-xl backdrop-saturate-150 shadow-none'
           }`}
         style={{
           borderBottom: '1px solid rgba(255,255,255,0.45)',
@@ -494,7 +495,7 @@ export default function Home() {
               <span className={`${playfair.className} truncate text-base font-semibold text-[#4A3E3D] md:text-lg`}>
                 Евгения Шарыгина
               </span>
-              <span className="truncate text-xs text-[#8C7A76]">Психолог-консультант</span>
+              <span className="truncate text-xs text-[#8C7A76]">Психотерапевт</span>
             </span>
           </a>
 
@@ -567,11 +568,11 @@ export default function Home() {
             </p>
 
             {/* метрики */}
-            <div className="mt-9 flex flex-wrap gap-3">
+            <div className="mt-9 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-2">
               {heroStats.map(({ icon: Icon, value, label }) => (
                 <div
                   key={label}
-                  className="flex min-w-[190px] flex-1 items-center gap-3 rounded-2xl border border-white/60 bg-white/70 px-4 py-3.5 shadow-sm backdrop-blur-sm sm:flex-none"
+                  className="flex items-center gap-3 rounded-2xl border border-white/60 bg-white/70 px-4 py-3.5 shadow-sm backdrop-blur-sm"
                 >
                   <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-[#F0E4D3]">
                     <Icon className="h-5 w-5 text-[#4A3E3D]" strokeWidth={1.75} />
