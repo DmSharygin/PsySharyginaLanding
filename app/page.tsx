@@ -390,21 +390,21 @@ function PricingCard({
 }) {
   return (
     <GlassCard className="flex flex-col items-center p-8 text-center">
-  {/* Бейдж длительности как на втором скриншоте */}
-  <div className="inline-flex items-center justify-center rounded-full bg-[#4A3E3D]/8 px-4 py-1.5 text-sm font-medium text-[#4A3E3D]">
-    {duration}
-  </div>
+      {/* Бейдж длительности как на втором скриншоте */}
+      <div className="inline-flex items-center justify-center rounded-full bg-[#4A3E3D]/8 px-4 py-1.5 text-sm font-medium text-[#4A3E3D]">
+        {duration}
+      </div>
 
-  {/* Название услуги */}
-  <h3 className={`${playfair.className} mt-6 text-xl font-medium text-[#4A3E3D]`}>
-    {type}
-  </h3>
+      {/* Название услуги */}
+      <h3 className={`${playfair.className} mt-6 text-xl font-medium text-[#4A3E3D]`}>
+        {type}
+      </h3>
 
-  {/* Стоимость (с ровными цифрами без засечек) */}
-  <p className="mt-3 text-4xl font-bold tracking-tight text-[#4A3E3D]">
-    {price}
-  </p>
-</GlassCard>
+      {/* Стоимость (с ровными цифрами без засечек) */}
+      <p className="mt-3 text-4xl font-bold tracking-tight text-[#4A3E3D]">
+        {price}
+      </p>
+    </GlassCard>
   );
 }
 
@@ -470,11 +470,10 @@ export default function Home() {
       {/* HEADER — fixed, liquid glass                                    */}
       {/* ---------------------------------------------------------------- */}
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-          scrolled
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled
             ? 'bg-white/35 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_8px_32px_rgba(74,62,61,0.10)]'
             : 'bg-white/15 backdrop-blur-xl backdrop-saturate-150 shadow-none'
-        }`}
+          }`}
         style={{
           borderBottom: '1px solid rgba(255,255,255,0.45)',
           boxShadow: scrolled
@@ -551,29 +550,23 @@ export default function Home() {
         <Blob className="right-[-5%] top-[30%] h-96 w-96 bg-[#EAD9CC]/40" />
 
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-stretch gap-14 lg:grid-cols-2 lg:gap-16">
-          {/* Left column */}
-          <div className="relative z-10 flex min-w-0 flex-col justify-center">
-            {/* Бейдж формата работы */}
-            <span
-              className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-white/70 bg-white/70 px-4 py-2 text-sm text-[#4A3E3D] shadow-sm backdrop-blur-sm"
-            >
+          {/* Левая колонка — текст (на мобильных становится второй) */}
+          <div className="relative z-10 flex min-w-0 flex-col justify-center order-2 lg:order-1">
+            {/* бейдж */}
+            <span className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-white/70 bg-white/70 px-4 py-2 text-sm text-[#4A3E3D] shadow-sm backdrop-blur-sm">
               <span className="h-2 w-2 flex-shrink-0 rounded-full" style={{ backgroundColor: GREEN }} />
               Онлайн и очные консультации в Москве
             </span>
 
-            <h1
-              className={`${playfair.className} text-3xl font-semibold leading-tight text-[#4A3E3D] sm:text-4xl md:text-5xl md:leading-[1.15]`}
-            >
-              Евгения Шарыгина —<br className="hidden sm:block" /> практикующий психолог и
-              психотерапевт
+            <h1 className={`${playfair.className} text-3xl font-semibold leading-tight text-[#4A3E3D] sm:text-4xl md:text-5xl md:leading-[1.15]`}>
+              Евгения Шарыгина —<br className="hidden sm:block" /> практикующий психолог и психотерапевт
             </h1>
 
             <p className="mt-6 max-w-xl text-base leading-relaxed text-[#6B5B58] md:text-lg">
-              Создаю безопасное пространство для глубинной работы, изменения жизненных
-              сценариев и встречи с собой.
+              Создаю безопасное пространство для глубинной работы, изменения жизненных сценариев и встречи с собой.
             </p>
 
-            {/* Три отдельные карточки с метриками */}
+            {/* метрики */}
             <div className="mt-9 flex flex-wrap gap-3">
               {heroStats.map(({ icon: Icon, value, label }) => (
                 <div
@@ -593,7 +586,7 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Основной + второстепенный CTA */}
+            {/* CTA */}
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <button
                 onClick={scrollToBooking}
@@ -608,14 +601,14 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Right column — живое фото в кабинете/интерьере */}
-          <div className="relative z-10 min-w-0">
-            <div className="relative h-full min-h-[380px] w-full lg:min-h-[560px]">
+          {/* Правая колонка — фото (на мобильных становится первой) */}
+          <div className="relative z-10 min-w-0 order-1 lg:order-2">
+            <div className="relative h-full w-full min-h-[300px] lg:min-h-[560px] max-h-[60vh] lg:max-h-none">
               <ThemedImage
                 src="/images/portrait-hero2.jpg"
                 alt="Евгения Шарыгина — психолог, психотерапевт, в кабинете"
                 roundedClass="rounded-3xl"
-                className="h-full"
+                className="h-full w-full object-cover"
                 filterClass="contrast-[1.03] brightness-[1.02] saturate-[1.05]"
                 vignetteOpacity="opacity-10"
               />
@@ -851,7 +844,7 @@ export default function Home() {
 
       <SectionDivider />
 
-{/* ---------------------------------------------------------------- */}
+      {/* ---------------------------------------------------------------- */}
       {/* PRICING                                                          */}
       {/* ---------------------------------------------------------------- */}
       <section id="prices" className="relative px-6 py-16 md:px-10 md:py-24">
