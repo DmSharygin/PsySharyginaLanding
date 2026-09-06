@@ -174,6 +174,160 @@ const pricingCards = [
   },
 ];
 
+// Разместите этот объект вверху файла (вне компонента страницы)
+const LEGAL_DOCS_CONTENT = {
+  privacy: (
+    <>
+      <div className="prose max-w-3xl mx-auto p-6 text-gray-800 leading-relaxed">
+        <h1 className="text-2xl font-bold mb-6">Политика в отношении обработки персональных данных</h1>
+        <p className="text-sm text-gray-500 mb-6">Дата публикации: 2026 год</p>
+
+        <p className="mb-4">
+          <strong>1. Общие положения</strong><br />
+          1.1. Настоящая Политика в отношении обработки персональных данных (далее — Политика) определена в соответствии с Федеральным законом от 27.07.2006 № 152-ФЗ «О персональных данных» и действует в отношении всей информации, которую сайт <strong>https://psychologysharygina.ru/</strong> (далее — Сайт) может получить о Пользователе при заполнении веб-форм или использовании сервисов Сайта.
+        </p>
+        <p className="mb-4">
+          1.2. Оператором персональных данных является: <strong>ИП Шарыгина Евгения Александровна</strong> (ИНН: 772402407266, [ОГРНИП / Статус плательщика НПД (самозанятый)]), e-mail: ginitolk@mail.com.
+        </p>
+        <p className="mb-4">
+          1.3. Отправка заявки через форму «Запись на консультацию», а также использование Сайта означает полное и безоговорочное согласие Пользователя с настоящей Политикой.
+        </p>
+
+        <p className="mb-4">
+          <strong>2. Категории обрабатываемых данных</strong><br />
+          2.1. Оператор обрабатывает персональные данные, добровольно вводимые Пользователем в форму «Запись на консультацию» на Сайте:
+        </p>
+        <ul className="list-disc pl-6 mb-4 space-y-1">
+          <li>Имя Пользователя;</li>
+          <li>Номер контактного телефона и/или никнейм/аккаунт в мессенджере Telegram;</li>
+          <li>Предпочитаемое время оказания услуг;</li>
+          <li>Тема запроса (краткая информация о цели обращения).</li>
+        </ul>
+        <p className="mb-4">
+          2.2. На Сайте осуществляется сбор и обработка обезличенных данных о посетителях (файлы cookie, IP-адрес, данные об устройстве и браузере) с помощью сервисов веб-аналитики (например, Яндекс.Метрика).
+        </p>
+
+        <p className="mb-4">
+          <strong>3. Цели обработки данных</strong><br />
+          3.1. Прием и обработка заявки Пользователя на запись к психологу, подбор времени проведения консультации.<br />
+          3.2. Установление обратной связи с Пользователем (по телефону или через Telegram) для подтверждения записи и оказания психологических услуг.<br />
+          3.3. Обеспечение корректной работы Сайта и анализ его посещаемости.
+        </p>
+
+        <p className="mb-4">
+          <strong>4. Порядок и условия обработки персональных данных</strong><br />
+          4.1. Обработка персональных данных осуществляется с соблюдением принципов законности, конфиденциальности и безопасности, предусмотренных ФЗ № 152-ФЗ.<br />
+          4.2. Оператор принимает необходимые организационные и технические меры для защиты персональных данных Пользователя от неправомерного или случайного доступа.<br />
+          4.3. Персональные данные Пользователя (включая темы обращений) являются строго конфиденциальными и не передаются третьим лицам, за исключением случаев, прямо предусмотренных законодательством РФ.<br />
+          4.4. Хранение и первичная обработка персональных данных граждан РФ осуществляются на серверах, расположенных на территории Российской Федерации.
+        </p>
+
+        <p className="mb-4">
+          <strong>5. Использование файлов Cookie</strong><br />
+          5.1. Сайт использует файлы cookie для корректной работы и анализа трафика. Пользователь может отключить сохранение cookie в настройках своего веб-браузера.
+        </p>
+
+        <p className="mb-4">
+          <strong>6. Права Пользователя и контакты</strong><br />
+          6.1. Пользователь вправе отозвать согласие на обработку персональных данных или направить запрос на их уточнение/удаление по электронной почте Оператора: <strong>[E-mail]</strong>.
+        </p>
+      </div>
+    </>
+  ),
+  offer: (
+    <>
+      <div className="prose max-w-3xl mx-auto p-6 text-gray-800 leading-relaxed">
+        <h1 className="text-2xl font-bold mb-6">Публичная оферта на оказание психологических услуг</h1>
+        <p className="text-sm text-gray-500 mb-6">Дата публикации: 2026 год</p>
+
+        <p className="mb-4">
+          <strong>1. Общие положения</strong><br />
+          1.1. Настоящий документ является официальным предложением (публичной офертой) <strong>Шарыгина Евгения Александровна</strong> (ИНН: 772402407266, далее — Исполнитель) и содержит все существенные условия договора оказания психологических консультационных услуг физическим лицам (далее — Заказчик).<br />
+          1.2. В соответствии с п. 2 ст. 437 Гражданского кодекса РФ (ГК РФ) отправка заявки через форму «Запись на консультацию» на сайте и/или оплата услуг является акцептом настоящей Оферты.<br />
+          1.3. Акцепт оферты равносилен заключению Договора на условиях, изложенных в настоящем документе.
+        </p>
+
+        <p className="mb-4">
+          <strong>2. Предмет договора</strong><br />
+          2.1. Исполнитель обязуется оказать Заказчику психологические консультационные услуги (в форме индивидуальных онлайн- или очных сессий), а Заказчик обязуется оплатить эти услуги.<br />
+          2.2. Психологическая помощь не является медицинской услугой, не включает в себя назначение лекарственных препаратов и диагностику психических расстройств.
+        </p>
+
+        <p className="mb-4">
+          <strong>3. Порядок предоставления услуг и правило 24 часов</strong><br />
+          3.1. Заказчик оставляет заявку через форму на Сайте <strong>https://psychologysharygina.ru/</strong>, указывая имя, данные для связи (телефон/Telegram), удобное время и тему обращения.<br />
+          3.2. Исполнитель связывается с Заказчиком для окончательного утверждения даты и времени проведения сессии.<br />
+          3.3. Перенос или отмена консультации Заказчиком без потери оплаты возможны <strong>не менее чем за 24 часа</strong> до согласованного времени сессии.<br />
+          3.4. Если Заказчик отменяет или переносит консультацию менее чем за 24 часа, либо не появляется на сессии в назначенное время, денежные средства не возвращаются (удерживаются в качестве компенсации за забронированное время Исполнителя).<br />
+          3.5. В случае опоздания Заказчика время консультации не продлевается.
+        </p>
+
+        <p className="mb-4">
+          <strong>4. Конфиденциальность</strong><br />
+          4.1. Вся информация, указанная в форме заявки (включая тему запроса) и полученная в ходе консультаций, является строго конфиденциальной и не подлежит разглашению третьим лицам, за исключением случаев, прямо предусмотренных законодательством РФ.
+        </p>
+
+        <p className="mb-4">
+          <strong>5. Стоимость услуг и порядок расчетов</strong><br />
+          5.1. Стоимость услуг указана на Сайте в разделе «Стоимость».<br />
+          5.2. Оплата производится путем безналичного перевода до начала оказания услуг (100% предоплата, если иное не согласовано индивидуально). Исполнитель предоставляет Заказчику электронный чек.
+        </p>
+
+        <p className="mb-4">
+          <strong>6. Реквизиты Исполнителя</strong><br />
+          Исполнитель: <strong>Шарыгина Евгения Александровна</strong><br />
+          ИНН: 772402407266<br />
+          Статус: [ИП / Плательщик НПД (самозанятый)]<br />
+          E-mail: ginitolk@mail.com<br />
+          Телефон: +7 (916) 178-2822
+        </p>
+      </div>
+    </>
+  ),
+  consent: (
+    <>
+      <div className="prose max-w-3xl mx-auto p-6 text-gray-800 leading-relaxed">
+        <h1 className="text-2xl font-bold mb-6">Согласие на обработку персональных данных</h1>
+
+        <p className="mb-4">
+          Настоящим я, заполняя форму «Запись на консультацию» на сайте <strong>https://psychologysharygina.ru/</strong>, действуя своей волей и в своем интересе, выражаю свое согласие <strong>Шарыгина Евгения Александровна</strong> (ИНН: 772402407266, e-mail: ginitolk@mail.com, далее — Оператор) на обработку моих персональных данных на следующих условиях:
+        </p>
+
+        <p className="mb-4">
+          <strong>1. Перечень обрабатываемых персональных данных:</strong>
+        </p>
+        <ul className="list-disc pl-6 mb-4 space-y-1">
+          <li>Имя;</li>
+          <li>Номер контактного телефона;</li>
+          <li>Аккаунт/никнейм в мессенджере Telegram;</li>
+          <li>Предпочтения по времени проведения сессий;</li>
+          <li>Краткое описание темы запроса (цели обращения);</li>
+          <li>Пользовательские данные (файлы cookie, IP-адрес, данные об устройстве).</li>
+        </ul>
+
+        <p className="mb-4">
+          <strong>2. Цели обработки персональных данных:</strong>
+        </p>
+        <ul className="list-disc pl-6 mb-4 space-y-1">
+          <li>Прием и обработка моей заявки на запись к психологу;</li>
+          <li>Связь со мной по указанному номеру телефона или через Telegram для согласования даты, времени и условий проведения консультации;</li>
+          <li>Заключение и исполнение договора оказания психологических услуг (Публичной оферты).</li>
+        </ul>
+
+        <p className="mb-4">
+          <strong>3. Перечень действий с персональными данными:</strong><br />
+          Сбор, запись, систематизация, накопление, хранение, уточнение (обновление, изменение), извлечение, использование, обезличивание, блокирование, удаление и уничтожение персональных данных (как с использованием средств автоматизации, так и без них).
+        </p>
+
+        <p className="mb-4">
+          <strong>4. Срок действия и порядок отзыва:</strong><br />
+          Настоящее согласие действует с момента отправки формы на Сайте и до момента достижения целей обработки или отзыва Согласия. Согласие может быть отозвано в любой момент путем направления письменного заявления на электронную почту Оператора: <strong>ginitolk@mail.com</strong>.
+        </p>
+      </div>
+    </>
+  ),
+}
+
 const timeSlots = [
   'Утро (9:00–12:00)',
   'День (12:00–16:00)',
@@ -426,6 +580,7 @@ export default function Home() {
     topic: '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const [agreed, setAgreed] = useState(false);
 
   /**
    * Header: фиксированный (не sticky) и всегда виден при прокрутке.
@@ -433,6 +588,9 @@ export default function Home() {
    * насыщенность и заметная кромка) после начала скролла — на самом верху
    * страницы стекло почти прозрачное, при скролле "оживает" и уплотняется.
    */
+
+  // Внутри функции компонента:
+  const [activeDoc, setActiveDoc] = useState<'privacy' | 'offer' | 'consent' | null>(null)
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -980,13 +1138,61 @@ export default function Home() {
                 </div>
               </div>
 
+              {/* Checkbox: Consent & Policies */}
+              <div className="flex items-start gap-3 px-2 pt-1 text-left">
+                <input
+                  type="checkbox"
+                  id="agreed"
+                  name="agreed"
+                  checked={agreed}
+                  onChange={(e) => setAgreed(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 rounded border-gray-300 accent-[#C6967B] focus:ring-[#C6967B]"
+                />
+                <label htmlFor="agreed" className="text-xs leading-relaxed text-[#6B5B58] select-none">
+                  Нажимая кнопку «Записаться», я даю{' '}
+                  <button
+                    type="button"
+                    onClick={() => setActiveDoc('consent')}
+                    className="font-medium underline transition-colors hover:text-[#C6967B]"
+                  >
+                    Согласие на обработку данных
+                  </button>
+                  , а также принимаю условия{' '}
+                  <button
+                    type="button"
+                    onClick={() => setActiveDoc('privacy')}
+                    className="font-medium underline transition-colors hover:text-[#C6967B]"
+                  >
+                    Политики конфиденциальности
+                  </button>{' '}
+                  и{' '}
+                  <button
+                    type="button"
+                    onClick={() => setActiveDoc('offer')}
+                    className="font-medium underline transition-colors hover:text-[#C6967B]"
+                  >
+                    Публичной оферты
+                  </button>
+                  .
+                </label>
+              </div>
+
+              {/* Submit button */}
               <div className="pt-2 text-center">
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 rounded-full px-10 py-3.5 text-sm font-medium text-white shadow-md transition-all duration-300 hover:shadow-lg md:text-base"
-                  style={{ backgroundColor: GREEN }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = GREEN_DARK)}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = GREEN)}
+                  disabled={!agreed}
+                  className={`inline-flex items-center gap-2 rounded-full px-10 py-3.5 text-sm font-medium text-white shadow-md transition-all duration-300 md:text-base ${!agreed
+                      ? 'cursor-not-allowed opacity-50'
+                      : 'hover:shadow-lg'
+                    }`}
+                  style={{ backgroundColor: agreed ? GREEN : '#9C8C89' }}
+                  onMouseEnter={(e) => {
+                    if (agreed) e.currentTarget.style.backgroundColor = GREEN_DARK;
+                  }}
+                  onMouseLeave={(e) => {
+                    if (agreed) e.currentTarget.style.backgroundColor = GREEN;
+                  }}
                 >
                   Записаться
                   <Send className="h-4 w-4" strokeWidth={2} />
@@ -1000,7 +1206,7 @@ export default function Home() {
       {/* ---------------------------------------------------------------- */}
       {/* CONTACTS SECTION                                                */}
       {/* ---------------------------------------------------------------- */}
-            <section id="contacts" className="relative px-6 py-16 md:px-10 md:py-24">
+      <section id="contacts" className="relative px-6 py-16 md:px-10 md:py-24">
         <div className="mx-auto max-w-4xl text-center">
           <SectionEyebrow>Свяжитесь со мной</SectionEyebrow>
           <h2 className={`${playfair.className} mt-5 text-3xl font-semibold text-[#4A3E3D] sm:text-4xl`}>
@@ -1013,7 +1219,7 @@ export default function Home() {
 
         <GlassCard className="mx-auto mt-10 max-w-5xl p-6 md:p-10">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            
+
             {/* Левая колонка (Контакты) */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {/* Адрес */}
@@ -1101,56 +1307,102 @@ export default function Home() {
       {/* FOOTER                                                          */}
       {/* ---------------------------------------------------------------- */}
       <footer className="relative border-t border-white/40 bg-white/40 px-6 py-10 backdrop-blur-sm md:px-10">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 text-center md:flex-row md:text-left">
-          <div className="flex flex-col items-center gap-1 md:items-start">
-            <span className={`${playfair.className} text-lg font-semibold text-[#4A3E3D]`}>
-              Евгения Шарыгина
-            </span>
-            <span className="text-sm text-[#6B5B58]">Практикующий психолог, психотерапевт</span>
+        <div className="mx-auto max-w-7xl text-center text-sm text-[#6B5B58]">
+          {/* Основная информация и реквизиты */}
+          <div className="space-y-1.5">
+            <p className="font-semibold text-[#4A3E3D]">Психолог Евгения Шарыгина</p>
+            <p className="text-xs text-[#8C7A76]">
+             ИП Шарыгина Евгения Александровна | ИНН: 772402407266 | Самозанятая (Плательщик НПД)
+            </p>
+            <p className="text-xs text-[#8C7A76]">
+              Email для связи:{''}
+              <a
+                href="mailto:ginitolk@mail.com"
+                className="underline transition-colors hover:text-[#4A3E3D]"
+              >
+                ginitolk@mail.com
+              </a>{' '}
+              | Тел:{' '}
+              <a
+                href="tel:+79161782822"
+                className="underline transition-colors hover:text-[#4A3E3D]"
+              >
+                +7 (916) 178-28-22
+              </a>
+            </p>
           </div>
 
-          <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-6">
-            <a
-              href="tel:+79161782822"
-              className="inline-flex items-center gap-2 text-sm text-[#4A3E3D] transition-colors"
+          {/* Ссылки на документы */}
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs font-medium text-[#4A3E3D]">
+            <button
+              type="button"
+              onClick={() => setActiveDoc('privacy')}
+              className="transition-colors hover:text-[#C6967B] hover:underline"
             >
-              <Phone className="h-4 w-4" style={{ color: GREEN }} strokeWidth={1.75} />
-              +7 (916) 178-28-22
-            </a>
-            <a
-              href="https://t.me/sharygina_psy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm text-[#4A3E3D] transition-colors"
+              Политика конфиденциальности
+            </button>
+            <span className="text-[#C6967B]">•</span>
+            <button
+              type="button"
+              onClick={() => setActiveDoc('offer')}
+              className="transition-colors hover:text-[#C6967B] hover:underline"
             >
-              <Send className="h-4 w-4" style={{ color: GREEN }} strokeWidth={1.75} />
-              Telegram
-            </a>
-            <a
-              href="mailto:hello@sharygina.ru"
-              className="inline-flex items-center gap-2 text-sm text-[#4A3E3D] transition-colors"
+              Публичная оферта
+            </button>
+            <span className="text-[#C6967B]">•</span>
+            <button
+              type="button"
+              onClick={() => setActiveDoc('consent')}
+              className="transition-colors hover:text-[#C6967B] hover:underline"
             >
-              <MapPin className="h-4 w-4" style={{ color: GREEN }} strokeWidth={1.75} />
-              Онлайн / очно, Москва
-            </a>
+              Согласие на обработку данных
+            </button>
           </div>
 
-          <button
-            onClick={scrollToTop}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/60 bg-white/70 text-[#4A3E3D] shadow-sm transition-colors hover:text-white"
-            style={{ '--hover-bg': GREEN } as React.CSSProperties}
-            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = GREEN)}
-            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '')}
-            aria-label="Наверх"
-          >
-            <ArrowUp className="h-4 w-4" strokeWidth={2} />
-          </button>
+          {/* Копирайт */}
+          <p className="mt-6 text-xs text-[#8C7A76]">
+            © 2026 psychologysharygina.ru. Все права защищены.
+          </p>
         </div>
-
-        <p className="mx-auto mt-8 max-w-7xl text-center text-xs text-[#9C8C89]">
-          © 2026 ИП Шарыгина Евгения Александровна. Все права защищены.
-        </p>
       </footer>
+
+      {/* ---------------------------------------------------------------- */}
+      {/* FULLSCREEN MODAL FOR LEGAL DOCUMENTS                            */}
+      {/* ---------------------------------------------------------------- */}
+      {activeDoc && (
+        <div className="fixed inset-0 z-50 flex flex-col bg-[#FAF1E2]/95 backdrop-blur-xl animate-in fade-in duration-200">
+          {/* Шапка модального окна */}
+          <div className="flex items-center justify-between border-b border-[#EAD9CC] px-6 py-4 md:px-10">
+            <h3 className={`${playfair.className} text-lg font-semibold text-[#4A3E3D] md:text-xl`}>
+              {activeDoc === 'privacy' && 'Политика конфиденциальности'}
+              {activeDoc === 'offer' && 'Публичная оферта'}
+              {activeDoc === 'consent' && 'Согласие на обработку данных'}
+            </h3>
+            <button
+              type="button"
+              onClick={() => setActiveDoc(null)}
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/60 text-[#4A3E3D] transition-colors hover:bg-white"
+              aria-label="Закрыть"
+            >
+              <X className="h-5 w-5" strokeWidth={2} />
+            </button>
+          </div>
+
+          {/* Контент модального окна */}
+          <div className="mx-auto w-full max-w-4xl flex-1 overflow-y-auto px-6 py-8 md:px-10">
+            <div className="rounded-3xl border border-white/80 bg-white/70 p-6 shadow-sm backdrop-blur-sm md:p-10">
+              <h1 className={`${playfair.className} mb-6 text-2xl font-bold text-[#4A3E3D] md:text-3xl`}>
+                {activeDoc === 'privacy' && 'Политика конфиденциальности'}
+                {activeDoc === 'offer' && 'Публичная оферта'}
+                {activeDoc === 'consent' && 'Согласие на обработку персональных данных'}
+              </h1>
+              <div className="space-y-4 text-base leading-relaxed text-[#6B5B58]">
+                {activeDoc && LEGAL_DOCS_CONTENT[activeDoc]}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
