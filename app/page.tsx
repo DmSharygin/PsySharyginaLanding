@@ -506,7 +506,6 @@ function PortraitFrame({
 
 function DiplomaCarousel({ images }: { images: { src: string; alt: string }[] }) {
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
-
   useEffect(() => {
     if (!lightboxSrc) return;
     const onKey = (e: KeyboardEvent) => {
@@ -612,6 +611,7 @@ export default function Home() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [agreed, setAgreed] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isFormValid =
     agreed &&
     form.name.trim() !== '' &&
@@ -687,17 +687,18 @@ export default function Home() {
     <div
       className={`${inter.variable} ${playfair.variable} min-h-screen overflow-x-hidden bg-gradient-to-b from-[#FAF1E2] via-[#F5EAD6] to-[#FBF6EC] font-sans text-[#4A3E3D] antialiased`}
     >
+
       {/* ---------------------------------------------------------------- */}
-      {/* HEADER - fixed, liquid glass                                    */}
+      {/* HEADER - fixed, liquid glass с мобильным меню                    */}
       {/* ---------------------------------------------------------------- */}
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled
-          ? 'bg-white/35 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_8px_32px_rgba(74,62,61,0.10)]'
-          : 'bg-white/15 backdrop-blur-xl backdrop-saturate-150 shadow-none'
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled || mobileMenuOpen
+            ? 'bg-white/40 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_8px_32px_rgba(74,62,61,0.10)]'
+            : 'bg-white/15 backdrop-blur-xl backdrop-saturate-150 shadow-none'
           }`}
         style={{
           borderBottom: '1px solid rgba(255,255,255,0.45)',
-          boxShadow: scrolled
+          boxShadow: scrolled || mobileMenuOpen
             ? 'inset 0 1px 1px rgba(255,255,255,0.6), 0 8px 32px rgba(74,62,61,0.10)'
             : 'inset 0 1px 1px rgba(255,255,255,0.4)',
         }}
@@ -719,7 +720,7 @@ export default function Home() {
             </span>
           </a>
 
-          {/* Nav */}
+          {/* Nav (Desktop) */}
           <nav className="hidden items-center gap-7 text-sm text-[#6B5B58] lg:flex">
             {navLinks.map(({ href, label }) => (
               <a key={href} href={href} className="whitespace-nowrap transition-colors hover:text-[#4A3E3D]">
@@ -728,7 +729,7 @@ export default function Home() {
             ))}
           </nav>
 
-          {/* Phone + CTA (desktop) */}
+          {/* Phone + CTA (Desktop) */}
           <div className="hidden items-center gap-5 md:flex">
             <a
               href="tel:+79161782822"
@@ -749,15 +750,63 @@ export default function Home() {
             </button>
           </div>
 
-          {/* CTA (mobile, компактный вариант без телефона и nav) */}
-          <button
-            onClick={scrollToBooking}
-            className="flex-shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-300 md:hidden"
-            style={{ backgroundColor: GREEN }}
-          >
-            Записаться
-          </button>
+          {/* Mobile controls: CTA + Hamburger Toggle */}
+          <div className="flex items-center gap-2 lg:hidden">
+            <button
+              onClick={scrollToBooking}
+              className="whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors duration-300"
+              style={{ backgroundColor: GREEN }}
+            >
+              Записаться
+            </button>
+
+            {/* Кнопка Гамбургер / Крестик */}
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen((prev) => !prev)}
+              className="inline-flex items-center justify-center rounded-xl p-2 text-[#4A3E3D] transition-colors hover:bg-white/20"
+              aria-label="Переключить меню"
+            >
+              {mobileMenuOpen ? (
+                /* Крестик */
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                /* Три полоски */
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
+
+        {/* Выпадающее мобильное меню (Liquid Glass Dropdown) */}
+        {mobileMenuOpen && (
+          <div className="border-t border-white/30 px-6 py-5 lg:hidden">
+            <div className="flex flex-col gap-4 text-base font-medium text-[#4A3E3D]">
+              {navLinks.map(({ href, label }) => (
+                <a
+                  key={href}
+                  href={href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="py-1 transition-colors hover:text-[#C6967B]"
+                >
+                  {label}
+                </a>
+              ))}
+              <hr className="my-1 border-stone-300/40" />
+              <a
+                href="tel:+79161782822"
+                className="inline-flex items-center gap-2.5 py-1 text-sm font-normal text-[#4A3E3D]"
+              >
+                <Phone className="h-4 w-4" style={{ color: GREEN }} strokeWidth={1.75} />
+                +7 (916) 178-28-22
+              </a>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Spacer, компенсирующий изъятие fixed-хедера из потока документа */}
