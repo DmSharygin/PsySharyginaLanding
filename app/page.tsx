@@ -1355,6 +1355,7 @@ export default function Home() {
                 height="100%"
                 frameBorder="0"
                 allowFullScreen={true}
+                loading="lazy"
                 className="w-full h-full grayscale-[0.2] contrast-[1.05]"
                 title="Кабинет на карте"
               />
