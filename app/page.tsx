@@ -1195,7 +1195,7 @@ export default function Home() {
                   className="mt-0.5 h-4 w-4 rounded border-gray-300 accent-[#C6967B] focus:ring-[#C6967B]"
                 />
                 <label htmlFor="agreed" className="text-xs leading-relaxed text-[#6B5B58] select-none">
-                  Нажимая кнопку «Записаться», я даю{' '}
+                  Я даю{' '}
                   <button
                     type="button"
                     onClick={() => setActiveDoc('consent')}
