@@ -693,8 +693,8 @@ export default function Home() {
       {/* ---------------------------------------------------------------- */}
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled || mobileMenuOpen
-            ? 'bg-white/40 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_8px_32px_rgba(74,62,61,0.10)]'
-            : 'bg-white/15 backdrop-blur-xl backdrop-saturate-150 shadow-none'
+          ? 'bg-white/40 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_8px_32px_rgba(74,62,61,0.10)]'
+          : 'bg-white/15 backdrop-blur-xl backdrop-saturate-150 shadow-none'
           }`}
         style={{
           borderBottom: '1px solid rgba(255,255,255,0.45)',
@@ -704,16 +704,18 @@ export default function Home() {
         }}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3 md:px-10">
-          {/* Brand: avatar + name/subtitle */}
+          {/* Brand: avatar (desktop only) + name/subtitle */}
           <a href="#" className="flex min-w-0 items-center gap-3">
+            {/* Аватар "ЕШ" — показывается только на десктопе (md:flex), на мобильных скрыт (hidden) */}
             <span
-              className={`${playfair.className} flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full text-sm font-semibold text-white shadow-sm`}
+              className={`${playfair.className} hidden h-11 w-11 flex-shrink-0 items-center justify-center rounded-full text-sm font-semibold text-white shadow-sm md:flex`}
               style={{ background: `linear-gradient(135deg, ${GREEN}, ${GREEN_DARK})` }}
             >
               ЕШ
             </span>
+
             <span className="flex min-w-0 flex-col leading-tight">
-              <span className={`${playfair.className} truncate text-base font-semibold text-[#4A3E3D] md:text-lg`}>
+              <span className={`${playfair.className} truncate text-base font-semibold text-[#4A3E3D] sm:text-lg`}>
                 Евгения Шарыгина
               </span>
               <span className="truncate text-xs text-[#8C7A76]">Психотерапевт</span>
