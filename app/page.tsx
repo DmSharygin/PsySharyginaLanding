@@ -254,7 +254,7 @@ const LEGAL_DOCS_CONTENT = {
 
         <p className="mb-4">
           <strong>6. Права Пользователя и контакты</strong><br />
-          6.1. Пользователь вправе отозвать согласие на обработку персональных данных или направить запрос на их уточнение/удаление по электронной почте Оператора: <strong>[E-mail]</strong>.
+          6.1. Пользователь вправе отозвать согласие на обработку персональных данных или направить запрос на их уточнение/удаление по электронной почте Оператора: <strong>ginitolk@mail.ru</strong>.
         </p>
       </div>
     </>
@@ -586,7 +586,7 @@ function PricingCard({
       </h3>
 
       {/* Стоимость (с ровными цифрами без засечек) */}
-      <p className="mt-3 text-4xl font-bold tracking-tight text-[#4A3E3D]">
+      <p className="mt-3 text-4xl font-medium tracking-tight text-[#4A3E3D]">
         {price}
       </p>
     </GlassCard>
@@ -606,6 +606,7 @@ export default function Home() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [agreed, setAgreed] = useState(false);
+  const isFormValid = agreed && form.name.trim() !== '' && form.phone.trim() !== '';
 
   /**
    * Header: фиксированный (не sticky) и всегда виден при прокрутке.
@@ -891,6 +892,37 @@ export default function Home() {
       <SectionDivider />
 
       {/* ---------------------------------------------------------------- */}
+      {/* AREAS OF WORK                                                   */}
+      {/* ---------------------------------------------------------------- */}
+      <section id="work" className="relative px-6 py-16 md:px-10 md:py-24">
+        <Blob className="left-[0%] bottom-[0%] h-80 w-80 bg-[#EAD9CC]/50" />
+
+        <div className="mx-auto max-w-7xl text-center">
+          <SectionEyebrow>Фокус терапии</SectionEyebrow>
+          <h2 className={`${playfair.className} mt-5 text-3xl font-semibold text-[#4A3E3D] sm:text-4xl`}>
+            С какими запросами я работаю
+          </h2>
+        </div>
+
+        <div className="relative mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2">
+          {workAreas.map(({ icon: Icon, title, text }) => (
+            <GlassCard key={title} className="p-8 transition-transform duration-300 hover:-translate-y-1">
+              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#C6967B]/15">
+                <Icon className="h-6 w-6 text-[#C6967B]" strokeWidth={1.5} />
+              </span>
+              <h3 className={`${playfair.className} mt-5 text-xl font-semibold text-[#4A3E3D]`}>
+                {title}
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-[#6B5B58] md:text-base">{text}</p>
+            </GlassCard>
+          ))}
+        </div>
+      </section>
+
+      <SectionDivider />
+
+
+      {/* ---------------------------------------------------------------- */}
       {/* SELF-SELECTION GRID                                             */}
       {/* ---------------------------------------------------------------- */}
       <section className="relative px-6 py-16 md:px-10 md:py-24">
@@ -941,36 +973,6 @@ export default function Home() {
               ))}
             </ul>
           </GlassCard>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* ---------------------------------------------------------------- */}
-      {/* AREAS OF WORK                                                   */}
-      {/* ---------------------------------------------------------------- */}
-      <section id="work" className="relative px-6 py-16 md:px-10 md:py-24">
-        <Blob className="left-[0%] bottom-[0%] h-80 w-80 bg-[#EAD9CC]/50" />
-
-        <div className="mx-auto max-w-7xl text-center">
-          <SectionEyebrow>Фокус терапии</SectionEyebrow>
-          <h2 className={`${playfair.className} mt-5 text-3xl font-semibold text-[#4A3E3D] sm:text-4xl`}>
-            С какими запросами я работаю
-          </h2>
-        </div>
-
-        <div className="relative mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2">
-          {workAreas.map(({ icon: Icon, title, text }) => (
-            <GlassCard key={title} className="p-8 transition-transform duration-300 hover:-translate-y-1">
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#C6967B]/15">
-                <Icon className="h-6 w-6 text-[#C6967B]" strokeWidth={1.5} />
-              </span>
-              <h3 className={`${playfair.className} mt-5 text-xl font-semibold text-[#4A3E3D]`}>
-                {title}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-[#6B5B58] md:text-base">{text}</p>
-            </GlassCard>
-          ))}
         </div>
       </section>
 
@@ -1227,17 +1229,17 @@ export default function Home() {
               <div className="pt-2 text-center">
                 <button
                   type="submit"
-                  disabled={!agreed}
-                  className={`inline-flex items-center gap-2 rounded-full px-10 py-3.5 text-sm font-medium text-white shadow-md transition-all duration-300 md:text-base ${!agreed
+                  disabled={!isFormValid}
+                  className={`inline-flex items-center gap-2 rounded-full px-10 py-3.5 text-sm font-medium text-white shadow-md transition-all duration-300 md:text-base ${!isFormValid
                     ? 'cursor-not-allowed opacity-50'
                     : 'hover:shadow-lg'
                     }`}
-                  style={{ backgroundColor: agreed ? GREEN : '#9C8C89' }}
+                  style={{ backgroundColor: isFormValid ? GREEN : '#9C8C89' }}
                   onMouseEnter={(e) => {
-                    if (agreed) e.currentTarget.style.backgroundColor = GREEN_DARK;
+                    if (isFormValid) e.currentTarget.style.backgroundColor = GREEN_DARK;
                   }}
                   onMouseLeave={(e) => {
-                    if (agreed) e.currentTarget.style.backgroundColor = GREEN;
+                    if (isFormValid) e.currentTarget.style.backgroundColor = GREEN;
                   }}
                 >
                   Записаться
