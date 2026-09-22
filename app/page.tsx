@@ -29,12 +29,16 @@ import {
   ArrowRight,
   X,
   GraduationCap,
-  Activity, 
-  Flame, 
-  Apple, 
-  Puzzle 
+  Activity,
+  Flame,
+  Apple,
+  Puzzle
 
 } from 'lucide-react';
+import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
+import 'react-phone-number-input/style.css'; // обязательно подключите стили
+import ru from 'react-phone-number-input/locale/ru.json'; // русская локализация
+
 
 const playfair = Playfair_Display({
   subsets: ['latin', 'cyrillic'],
@@ -606,7 +610,11 @@ export default function Home() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [agreed, setAgreed] = useState(false);
-  const isFormValid = agreed && form.name.trim() !== '' && form.phone.trim() !== '';
+  const isFormValid =
+    agreed &&
+    form.name.trim() !== '' &&
+    form.phone.trim() !== '' &&
+    isValidPhoneNumber(form.phone);
 
   /**
    * Header: фиксированный (не sticky) и всегда виден при прокрутке.
@@ -1138,15 +1146,16 @@ export default function Home() {
 
                 {/* Phone */}
                 <div className="relative">
-                  <Phone className="pointer-events-none absolute left-5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#C6967B]" strokeWidth={1.75} />
-                  <input
-                    type="tel"
+                  <PhoneInput
+                    international
+                    defaultCountry="RU"
+                    countryCallingCodeEditable={false}
+                    labels={ru}
                     name="phone"
-                    required
                     value={form.phone}
-                    onChange={handleChange}
-                    placeholder="Телефон или Telegram"
-                    className="w-full rounded-full border border-white/80 bg-white/70 px-12 py-3 text-sm text-[#4A3E3D] placeholder:text-[#9C8C89] outline-none transition-shadow focus:ring-2 focus:ring-[#C6967B]"
+                    onChange={(value) => setForm((prev) => ({ ...prev, phone: value || '' }))}
+                    placeholder="Телефон"
+                    className="phone-input-custom"
                   />
                 </div>
 
