@@ -187,7 +187,7 @@ const LEGAL_DOCS_CONTENT = {
           1.1. Настоящая Политика в отношении обработки персональных данных (далее — Политика) определена в соответствии с Федеральным законом от 27.07.2006 № 152-ФЗ «О персональных данных» и действует в отношении всей информации, которую сайт <strong>https://psychologysharygina.ru/</strong> (далее — Сайт) может получить о Пользователе при заполнении веб-форм или использовании сервисов Сайта.
         </p>
         <p className="mb-4">
-          1.2. Оператором персональных данных является: <strong>ИП Шарыгина Евгения Александровна</strong> (ИНН: 772402407266, [ОГРНИП / Статус плательщика НПД (самозанятый)]), e-mail: ginitolk@mail.com.
+          1.2. Оператором персональных данных является: <strong>ИП Шарыгина Евгения Александровна</strong> (ИНН: 772402407266, [ОГРНИП / Статус плательщика НПД (самозанятый)]), e-mail: ginitolk@mail.ru.
         </p>
         <p className="mb-4">
           1.3. Отправка заявки через форму «Запись на консультацию», а также использование Сайта означает полное и безоговорочное согласие Пользователя с настоящей Политикой.
@@ -278,7 +278,7 @@ const LEGAL_DOCS_CONTENT = {
           Исполнитель: <strong>Шарыгина Евгения Александровна</strong><br />
           ИНН: 772402407266<br />
           Статус: [ИП / Плательщик НПД (самозанятый)]<br />
-          E-mail: ginitolk@mail.com<br />
+          E-mail: ginitolk@mail.ru<br />
           Телефон: +7 (916) 178-2822
         </p>
       </div>
@@ -290,7 +290,7 @@ const LEGAL_DOCS_CONTENT = {
         <h1 className="text-2xl font-bold mb-6">Согласие на обработку персональных данных</h1>
 
         <p className="mb-4">
-          Настоящим я, заполняя форму «Запись на консультацию» на сайте <strong>https://psychologysharygina.ru/</strong>, действуя своей волей и в своем интересе, выражаю свое согласие <strong>Шарыгина Евгения Александровна</strong> (ИНН: 772402407266, e-mail: ginitolk@mail.com, далее — Оператор) на обработку моих персональных данных на следующих условиях:
+          Настоящим я, заполняя форму «Запись на консультацию» на сайте <strong>https://psychologysharygina.ru/</strong>, действуя своей волей и в своем интересе, выражаю свое согласие <strong>Шарыгина Евгения Александровна</strong> (ИНН: 772402407266, e-mail: ginitolk@mail.ru, далее — Оператор) на обработку моих персональных данных на следующих условиях:
         </p>
 
         <p className="mb-4">
@@ -321,7 +321,7 @@ const LEGAL_DOCS_CONTENT = {
 
         <p className="mb-4">
           <strong>4. Срок действия и порядок отзыва:</strong><br />
-          Настоящее согласие действует с момента отправки формы на Сайте и до момента достижения целей обработки или отзыва Согласия. Согласие может быть отозвано в любой момент путем направления письменного заявления на электронную почту Оператора: <strong>ginitolk@mail.com</strong>.
+          Настоящее согласие действует с момента отправки формы на Сайте и до момента достижения целей обработки или отзыва Согласия. Согласие может быть отозвано в любой момент путем направления письменного заявления на электронную почту Оператора: <strong>ginitolk@mail.ru</strong>.
         </p>
       </div>
     </>
@@ -1204,8 +1204,8 @@ export default function Home() {
                   type="submit"
                   disabled={!agreed}
                   className={`inline-flex items-center gap-2 rounded-full px-10 py-3.5 text-sm font-medium text-white shadow-md transition-all duration-300 md:text-base ${!agreed
-                      ? 'cursor-not-allowed opacity-50'
-                      : 'hover:shadow-lg'
+                    ? 'cursor-not-allowed opacity-50'
+                    : 'hover:shadow-lg'
                     }`}
                   style={{ backgroundColor: agreed ? GREEN : '#9C8C89' }}
                   onMouseEnter={(e) => {
@@ -1269,15 +1269,18 @@ export default function Home() {
                 <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-[#F0E4D3]">
                   <Phone className="h-5 w-5 text-[#4A3E3D]" strokeWidth={1.75} />
                 </span>
-                <div className="flex flex-col">
+                <div className="flex flex-1 flex-col">
                   <span className="text-xs text-[#8C7A76]">Телефон</span>
-                  <span className="text-base font-semibold text-[#4A3E3D]">+7 (916) 178-28-22</span>
+                  {/* БЫЛО: text-base, СТАЛО: text-sm */}
+                  <span className="whitespace-nowrap text-sm font-semibold text-[#4A3E3D]">
+                    +7 (916) 178-28-22
+                  </span>
                 </div>
               </a>
 
               {/* Telegram (личный) */}
               <a
-                href="https://t.me/e_sharygina"
+                href="https://t.me/Psy_Sharygina"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 rounded-2xl border border-white/60 bg-white/50 p-4 transition-all hover:bg-white/80"
@@ -1333,15 +1336,15 @@ export default function Home() {
           <div className="space-y-1.5">
             <p className="font-semibold text-[#4A3E3D]">Психолог Евгения Шарыгина</p>
             <p className="text-xs text-[#8C7A76]">
-             ИП Шарыгина Евгения Александровна | ИНН: 772402407266 | Самозанятая (Плательщик НПД)
+              ИП Шарыгина Евгения Александровна | ИНН: 772402407266 | Самозанятая (Плательщик НПД)
             </p>
             <p className="text-xs text-[#8C7A76]">
               Email для связи:{''}
               <a
-                href="mailto:ginitolk@mail.com"
+                href="mailto:ginitolk@mail.ru"
                 className="underline transition-colors hover:text-[#4A3E3D]"
               >
-                ginitolk@mail.com
+                ginitolk@mail.ru
               </a>{' '}
               | Тел:{' '}
               <a
