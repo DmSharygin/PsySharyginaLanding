@@ -1241,115 +1241,209 @@ export default function Home() {
     <div
       className={`${inter.variable} ${playfair.variable} min-h-screen overflow-x-hidden bg-gradient-to-b from-[#FAF1E2] via-[#F5EAD6] to-[#FBF6EC] font-sans text-[#4A3E3D] antialiased`}
     >
-
-      {/* Header content */}
       <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6 md:px-10">
 
-        {/* Brand */}
-        <a
-          href="#"
-          className="flex min-w-0 shrink items-center gap-3"
+        ```tsx
+        {/* ---------------------------------------------------------------- */}
+        {/* HEADER - fixed, liquid glass, responsive                         */}
+        {/* ---------------------------------------------------------------- */}
+        <header
+          className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled || mobileMenuOpen
+            ? 'bg-white/40 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_8px_32px_rgba(74,62,61,0.10)]'
+            : 'bg-white/15 backdrop-blur-xl backdrop-saturate-150 shadow-none'
+            }`}
+          style={{
+            borderBottom: '1px solid rgba(255,255,255,0.45)',
+            boxShadow:
+              scrolled || mobileMenuOpen
+                ? 'inset 0 1px 1px rgba(255,255,255,0.6), 0 8px 32px rgba(74,62,61,0.10)'
+                : 'inset 0 1px 1px rgba(255,255,255,0.4)',
+          }}
         >
-          <span
-            className={`${playfair.className} hidden h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm font-semibold text-white shadow-sm lg:flex`}
-            style={{
-              background: `linear-gradient(135deg, ${GREEN}, ${GREEN_DARK})`,
-            }}
-          >
-            ЕШ
-          </span>
+          {/* ============================================================ */}
+          {/* Основная строка хедера                                       */}
+          {/* ============================================================ */}
+          <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6 md:px-10">
 
-          <span className="flex min-w-0 flex-col leading-tight">
-            <span
-              className={`${playfair.className} truncate text-base font-semibold text-[#4A3E3D] sm:text-lg`}
-            >
-              Евгения Шарыгина
-            </span>
-
-            <span className="truncate text-xs text-[#8C7A76]">
-              Психотерапевт
-            </span>
-          </span>
-        </a>
-
-        {/* Desktop Nav */}
-        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-5 text-sm text-[#6B5B58] lg:flex xl:gap-7">
-          {navLinks.map(({ href, label }) => (
+            {/* ---------------------------------------------------------- */}
+            {/* BRAND                                                      */}
+            {/* ---------------------------------------------------------- */}
             <a
-              key={href}
-              href={href}
-              className="whitespace-nowrap transition-colors hover:text-[#4A3E3D]"
+              href="#"
+              className="flex min-w-0 shrink items-center gap-3"
             >
-              {label}
+              {/* Аватар — только desktop */}
+              <span
+                className={`${playfair.className} hidden h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm font-semibold text-white shadow-sm lg:flex`}
+                style={{
+                  background: `linear-gradient(135deg, ${GREEN}, ${GREEN_DARK})`,
+                }}
+              >
+                ЕШ
+              </span>
+
+              {/* Имя */}
+              <span className="flex min-w-0 flex-col leading-tight">
+                <span
+                  className={`${playfair.className} truncate text-base font-semibold text-[#4A3E3D] sm:text-lg`}
+                >
+                  Евгения Шарыгина
+                </span>
+
+                <span className="truncate text-xs text-[#8C7A76]">
+                  Психотерапевт
+                </span>
+              </span>
             </a>
-          ))}
-        </nav>
 
-        {/* Desktop phone */}
-        <a
-          href="tel:+79161782822"
-          className="hidden shrink-0 items-center gap-2 whitespace-nowrap text-sm text-[#4A3E3D] lg:inline-flex"
-        >
-          <Phone
-            className="h-4 w-4"
-            style={{ color: GREEN }}
-            strokeWidth={1.75}
-          />
-          +7 (916) 178-28-22
-        </a>
+            {/* ---------------------------------------------------------- */}
+            {/* DESKTOP NAV                                                */}
+            {/* ---------------------------------------------------------- */}
+            <nav className="hidden min-w-0 flex-1 items-center justify-center gap-5 text-sm text-[#6B5B58] lg:flex xl:gap-7">
+              {navLinks.map(({ href, label }) => (
+                <a
+                  key={href}
+                  href={href}
+                  className="whitespace-nowrap transition-colors hover:text-[#4A3E3D]"
+                >
+                  {label}
+                </a>
+              ))}
+            </nav>
 
-        {/* ОДНА кнопка Записаться */}
-        <button
-          onClick={scrollToBooking}
-          className="shrink-0 whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-colors duration-300 sm:px-5"
-          style={{ backgroundColor: GREEN }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.backgroundColor = GREEN_DARK)
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.backgroundColor = GREEN)
-          }
-        >
-          Записаться
-        </button>
+            {/* ---------------------------------------------------------- */}
+            {/* ПРАВАЯ ЧАСТЬ                                               */}
+            {/* ---------------------------------------------------------- */}
+            <div className="ml-auto flex shrink-0 items-center gap-2 sm:gap-3">
 
-        {/* Hamburger — только tablet/mobile */}
-        <button
-          type="button"
-          onClick={() => setMobileMenuOpen((prev) => !prev)}
-          className="inline-flex shrink-0 items-center justify-center rounded-xl p-2 text-[#4A3E3D] transition-colors hover:bg-white/20 lg:hidden"
-          aria-label="Переключить меню"
-        >
-          {mobileMenuOpen ? (
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          ) : (
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
+              {/* Телефон — только desktop */}
+              <a
+                href="tel:+79161782822"
+                className="hidden shrink-0 items-center gap-2 whitespace-nowrap text-sm text-[#4A3E3D] lg:inline-flex"
+              >
+                <Phone
+                  className="h-4 w-4 shrink-0"
+                  style={{ color: GREEN }}
+                  strokeWidth={1.75}
+                />
+
+                <span>
+                  +7 (916) 178-28-22
+                </span>
+              </a>
+
+              {/* ======================================================== */}
+              {/* ЕДИНСТВЕННАЯ КНОПКА "ЗАПИСАТЬСЯ"                        */}
+              {/* ======================================================== */}
+              <button
+                onClick={scrollToBooking}
+                className="shrink-0 whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-colors duration-300 sm:px-5"
+                style={{ backgroundColor: GREEN }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = GREEN_DARK;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = GREEN;
+                }}
+              >
+                Записаться
+              </button>
+
+              {/* -------------------------------------------------------- */}
+              {/* HAMBURGER — tablet / mobile                              */}
+              {/* -------------------------------------------------------- */}
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen((prev) => !prev)}
+                className="inline-flex shrink-0 items-center justify-center rounded-xl p-2 text-[#4A3E3D] transition-colors hover:bg-white/20 lg:hidden"
+                aria-label={
+                  mobileMenuOpen
+                    ? 'Закрыть меню'
+                    : 'Открыть меню'
+                }
+                aria-expanded={mobileMenuOpen}
+              >
+                {mobileMenuOpen ? (
+                  /* Крестик */
+                  <svg
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                ) : (
+                  /* Гамбургер */
+                  <svg
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  </svg>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* ============================================================ */}
+          {/* ВЫПАДАЮЩЕЕ МОБИЛЬНОЕ МЕНЮ                                  */}
+          {/* ============================================================ */}
+          {mobileMenuOpen && (
+            <div className="border-t border-white/30 px-6 py-5 lg:hidden">
+              <div className="flex flex-col gap-4 text-base font-medium text-[#4A3E3D]">
+
+                {/* Навигация */}
+                {navLinks.map(({ href, label }) => (
+                  <a
+                    key={href}
+                    href={href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="py-1 transition-colors hover:text-[#C6967B]"
+                  >
+                    {label}
+                  </a>
+                ))}
+
+                <hr className="my-1 border-stone-300/40" />
+
+                {/* Телефон */}
+                <a
+                  href="tel:+79161782822"
+                  className="inline-flex items-center gap-2.5 py-1 text-sm font-normal text-[#4A3E3D]"
+                >
+                  <Phone
+                    className="h-4 w-4"
+                    style={{ color: GREEN }}
+                    strokeWidth={1.75}
+                  />
+
+                  +7 (916) 178-28-22
+                </a>
+              </div>
+            </div>
           )}
-        </button>
+        </header>
+
+        {/* ---------------------------------------------------------------- */}
+        {/* Spacer — компенсирует fixed header                              */}
+        {/* ---------------------------------------------------------------- */}
+        <div
+          aria-hidden
+          className="h-[68px] sm:h-[72px] lg:h-[76px]"
+        />
 
       </div>
       {/* ---------------------------------------------------------------- */}
